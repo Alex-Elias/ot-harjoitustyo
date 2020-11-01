@@ -1,0 +1,113 @@
+commit 14e31cdd7f28ec7a02ddbbe96f3be6d2f7f35a90
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 12:00:45 2020 +0200
+
+    deleted file1 renamed file2 to file22
+
+ tiedostoja/file2             | 0
+ tiedostoja/{file1 => file22} | 0
+ 2 files changed, 0 insertions(+), 0 deletions(-)
+
+commit 7b4ab0d8919c9df1091a1657cd0ce52678071302
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:56:07 2020 +0200
+
+    created tiedostoja directory
+
+ tiedostoja/file1 | 0
+ tiedostoja/file2 | 0
+ tiedostoja/file3 | 0
+ 3 files changed, 0 insertions(+), 0 deletions(-)
+
+commit ae1785a6efeef408095763459714f8f8061e28c2
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:50:31 2020 +0200
+
+    changed eka.txt and kolmas.txt
+
+ eka.txt    | 4 +++-
+ kolmas.txt | 2 +-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+commit 70d75cd4d839b554a5c96b36d73bfed7ea19832a
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:46:57 2020 +0200
+
+    changed tiedosto.txt to eka.txt
+
+ tiedosto.txt => eka.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 7c944eeea3ab63d9a2f325cda543028031b063d2
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:45:33 2020 +0200
+
+    removed toinen.txt
+
+ toinen.txt | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit 096c06e469561bfe5e0c6654dd6d328a7bddf8ae
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:42:47 2020 +0200
+
+    modified tiedosto.txt
+
+ tiedosto.txt | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit b69a5efda2638c0453f0d13fd0359c8bd9b3d2ef
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:40:18 2020 +0200
+
+    modified tiedosto.txt
+
+ tiedosto.txt | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+commit 114c335fa5db70a7d872deab977700d8613a7bbf
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:35:25 2020 +0200
+
+    added stuff
+
+ stuff/tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 10a895b487ec6ee6d198bd396e425e46b2c182c9
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:34:07 2020 +0200
+
+    changed kolmas.txt and toinen.txt
+
+ kolmas.txt | 1 +
+ toinen.txt | 1 +
+ 2 files changed, 2 insertions(+)
+
+commit 166d5eda4aa6c03f14ddba48ebadc02170663d6f
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:32:41 2020 +0200
+
+    created kolmas.txt
+
+ kolmas.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
+
+commit 93f02582ef4155023c7ea08e146d238bf1afd855
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:30:52 2020 +0200
+
+    muutos ja lisäys
+
+ tiedosto.txt | 1 +
+ toinen.txt   | 0
+ 2 files changed, 1 insertion(+)
+
+commit 3d627d5719a27f8b55fc8a751d334e89e207282b
+Author: Alex-Elias <alex.pohjanpelto@gmail.com>
+Date:   Sun Nov 1 11:28:24 2020 +0200
+
+    tiedosto.txt luotu
+
+ tiedosto.txt | 0
+ 1 file changed, 0 insertions(+), 0 deletions(-)
