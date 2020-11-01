@@ -6,4 +6,5 @@ This is the README.md document for the repository ot-harjoitustyo for the class 
 
 ### Viikko 1
 [gitlog.txt](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/laskarit/viikko1/gitlog.txt)
+
 [komentorivi.txt](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/laskarit/viikko1/komentorivi.txt)
