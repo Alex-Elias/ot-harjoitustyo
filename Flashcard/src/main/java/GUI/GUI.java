@@ -1,5 +1,6 @@
 package GUI;
 
+import Database.Database;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -108,7 +109,7 @@ public class GUI extends Application{
         
         
         
-        
+        Database db = new Database();
         
         
         
