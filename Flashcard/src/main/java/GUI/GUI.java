@@ -1,7 +1,9 @@
 package GUI;
 
 import Database.Database;
+import java.util.ArrayList;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -22,19 +24,29 @@ import javafx.stage.Stage;
  * @author alex
  */
 public class GUI extends Application{
+    
+    Database db;
 
     @Override
     public void start(Stage stage) throws Exception {
+        this.db = new Database();
         
-        GridPane scene1 = new GridPane();
-        scene1.setPadding(new Insets(50,10,10,50));
-        scene1.setMinSize(750,750);
+        
+        GridPane mainScene = new GridPane();
+        mainScene.setPadding(new Insets(50,10,10,50));
+        mainScene.setMinSize(750,750);
+        
+        ComboBox deckBox = new ComboBox();
+        ArrayList<String> deckList = db.getDecks();
+        deckBox.setItems(FXCollections.observableArrayList(deckList));
+        deckBox.getSelectionModel().selectFirst();
         
         
         HBox DecksAddButtonsHBox = new HBox();
         VBox scene1VBox = new VBox();
         VBox DecksVBox = new VBox();
         
+        Button AddDeckButton = new Button("Add Deck");
         Button AddButton = new Button("Add Card");
         DecksAddButtonsHBox.setSpacing(20);
         Label DecksLabel = new Label("Decks");
@@ -42,10 +54,10 @@ public class GUI extends Application{
         
         scene1VBox.setSpacing(50);
         
-        DecksAddButtonsHBox.getChildren().addAll(AddButton);
-        DecksVBox.getChildren().add(DecksLabel);
+        DecksAddButtonsHBox.getChildren().addAll(AddButton, AddDeckButton);
+        DecksVBox.getChildren().addAll(DecksLabel, deckBox);
         scene1VBox.getChildren().addAll(DecksAddButtonsHBox, DecksVBox);
-        scene1.add(scene1VBox,1,1);
+        mainScene.add(scene1VBox,1,1);
         
         
         
@@ -60,7 +72,8 @@ public class GUI extends Application{
         
         Button DecksButton = new Button("Decks");
         Label topLabel = new Label("Deck:");
-        ComboBox topCombo = new ComboBox();
+        ComboBox topCombo = new ComboBox(FXCollections.observableArrayList(deckList));
+        topCombo.getSelectionModel().selectFirst();
         Label reminderLabel = new Label("<--- remember to choose the Deck!");
         reminderLabel.setTextFill(Color.RED);
         reminderLabel.setFont(new Font(20));
@@ -91,8 +104,58 @@ public class GUI extends Application{
         secondScene.add(secondSceneVBox, 1, 1);
         
         
+        AddCard.setOnAction((event -> {
+        
+            String front = frontText.getText();
+            String sentence = sentenceText.getText();
+            String back = backText.getText();
+            String backSentence = backsentenceText.getText();
+            String deck = (String) topCombo.getValue();
+            this.db.addCard(front, sentence, back, backSentence, deck);
+            frontText.clear();
+            sentenceText.clear();
+            backText.clear();
+            backsentenceText.clear();
+        
+        }));
         
         
+        GridPane deckAddScene = new GridPane();
+        
+        Button deckReturnToDecksButton = new Button("Decks");
+        VBox deckAddVBox = new VBox();
+        deckAddVBox.getChildren().add(new Label("Deck name"));
+        TextField deckNameField = new TextField();
+        Button addDeckButton = new Button("Add");
+        deckAddVBox.getChildren().addAll(deckNameField, addDeckButton);
+        
+        deckAddScene.add(deckReturnToDecksButton, 0, 0);
+        deckAddScene.add(deckAddVBox, 1, 1);
+        
+        
+        addDeckButton.setOnAction((event -> {
+        
+            String deckName = deckNameField.getText();
+            db.addDeck(deckName);
+            deckNameField.clear();
+        
+        }));
+        
+        
+        deckReturnToDecksButton.setOnAction((event -> {
+        
+            stage.getScene().setRoot(mainScene);
+            
+            
+            
+        }));
+        
+        
+        AddDeckButton.setOnAction((event -> {
+            
+            stage.getScene().setRoot(deckAddScene);
+        
+        }));
         
         AddButton.setOnAction((event -> {
         
@@ -102,14 +165,14 @@ public class GUI extends Application{
         
         DecksButton.setOnAction((event ->{
         
-            stage.getScene().setRoot(scene1);
+            stage.getScene().setRoot(mainScene);
         
         }));
         
         
         
         
-        Database db = new Database();
+        
         
         
         
@@ -123,7 +186,7 @@ public class GUI extends Application{
         
         FirstScene firstscene = new FirstScene();
         
-        Scene scene = new Scene(scene1);
+        Scene scene = new Scene(mainScene);
         stage.setScene(scene);
         stage.setMinHeight(250);
         stage.setMinWidth(250);
