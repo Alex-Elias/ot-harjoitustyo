@@ -1,5 +1,6 @@
 package GUI;
 
+import Card.Card;
 import Database.Database;
 import java.util.ArrayList;
 import javafx.application.Application;
@@ -26,6 +27,14 @@ import javafx.stage.Stage;
 public class GUI extends Application{
     
     Database db;
+    ArrayList<Card> cardList;
+    
+    private int place;
+    
+    private TextArea frontLabelcard;
+    private TextArea sentenceLabelcard;
+    private TextArea backLabelcard;
+    private TextArea backSentenceLabelcard;
 
     @Override
     public void start(Stage stage) throws Exception {
@@ -40,11 +49,12 @@ public class GUI extends Application{
         ArrayList<String> deckList = db.getDecks();
         deckBox.setItems(FXCollections.observableArrayList(deckList));
         deckBox.getSelectionModel().selectFirst();
+        Button studyDeckButton = new Button("Study Deck");
         
         
         HBox DecksAddButtonsHBox = new HBox();
         VBox scene1VBox = new VBox();
-        VBox DecksVBox = new VBox();
+        VBox DecksVBox = new VBox(20);
         
         Button AddDeckButton = new Button("Add Deck");
         Button AddButton = new Button("Add Card");
@@ -55,7 +65,7 @@ public class GUI extends Application{
         scene1VBox.setSpacing(50);
         
         DecksAddButtonsHBox.getChildren().addAll(AddButton, AddDeckButton);
-        DecksVBox.getChildren().addAll(DecksLabel, deckBox);
+        DecksVBox.getChildren().addAll(DecksLabel, deckBox, studyDeckButton);
         scene1VBox.getChildren().addAll(DecksAddButtonsHBox, DecksVBox);
         mainScene.add(scene1VBox,1,1);
         
@@ -133,6 +143,97 @@ public class GUI extends Application{
         deckAddScene.add(deckAddVBox, 1, 1);
         
         
+        
+        
+        
+        
+        GridPane CardScene = new GridPane();
+        
+        Button returnToDeckButton = new Button("Decks");
+        Button goToAddButton = new Button("Add Card");
+        
+        HBox topCardHBox = new HBox(20);
+        topCardHBox.getChildren().addAll(returnToDeckButton, goToAddButton);
+        
+        VBox cardVBox = new VBox();
+        cardVBox.getChildren().add(topCardHBox);
+        
+        Label frontcardLabel = new Label("Front:");
+        frontLabelcard = new TextArea();
+        frontLabelcard.setMaxHeight(20);
+        frontLabelcard.setFont(new Font(20));
+        frontLabelcard.setEditable(false);
+        Label sentencecardLabel = new Label("Sentence:");
+        sentenceLabelcard = new TextArea();
+        sentenceLabelcard.setFont(new Font(20));
+        sentenceLabelcard.setEditable(false);
+        //sentenceLabelcard.setMaxHeight(40);
+        Label backcardLabel = new Label("Back:");
+        backLabelcard = new TextArea();
+        backLabelcard.setMaxHeight(20);
+        backLabelcard.setFont(new Font(20));
+        backLabelcard.setEditable(false);
+        Label backSentencecardLabel = new Label("Back Sentence:");
+        backSentenceLabelcard = new TextArea();
+        backSentenceLabelcard.setFont(new Font(20));
+        backSentenceLabelcard.setEditable(false);
+        //backSentenceLabelcard.setMaxHeight(40);
+        
+        cardVBox.getChildren().addAll(frontcardLabel, frontLabelcard, sentencecardLabel, sentenceLabelcard, backcardLabel, backLabelcard,
+                backSentencecardLabel, backSentenceLabelcard);
+        HBox BottomCardHBox = new HBox(20);
+        
+        Button show = new Button("Show");
+        Button next = new Button("Next");
+        BottomCardHBox.getChildren().addAll(show, next);
+        cardVBox.getChildren().add(BottomCardHBox);
+        
+        CardScene.add(cardVBox, 0,0);
+        
+        
+        show.setOnAction((event -> {
+            
+            this.backLabelcard.setVisible(true);
+            this.backSentenceLabelcard.setVisible(true);
+        
+        }));
+        
+        next.setOnAction((event -> {
+            this.place++;
+            if (this.place >= this.cardList.size()){
+                this.place = 0;
+            }
+            this.backLabelcard.setVisible(false);
+            this.backSentenceLabelcard.setVisible(false);
+            
+            Card card = this.cardList.get(place);
+            this.frontLabelcard.setText(card.getFront());
+            this.sentenceLabelcard.setText(card.getSentence());
+            this.backLabelcard.setText(card.getBack());
+            this.backSentenceLabelcard.setText(card.getBackSentence());
+            
+        
+        }));
+        
+        
+        
+        
+        studyDeckButton.setOnAction((event -> {
+            this.place = 0;
+            stage.getScene().setRoot(CardScene);
+            String deck = (String) deckBox.getValue();
+            this.cardList = this.db.getCards(deck);
+            Card card = this.cardList.get(0);
+            this.frontLabelcard.setText(card.getFront());
+            this.sentenceLabelcard.setText(card.getSentence());
+            this.backLabelcard.setText(card.getBack());
+            this.backSentenceLabelcard.setText(card.getBackSentence());
+            this.backLabelcard.setVisible(false);
+            this.backSentenceLabelcard.setVisible(false);
+        }));
+        
+        
+        
         addDeckButton.setOnAction((event -> {
         
             String deckName = deckNameField.getText();
@@ -168,6 +269,17 @@ public class GUI extends Application{
             stage.getScene().setRoot(mainScene);
         
         }));
+        returnToDeckButton.setOnAction((event -> {
+        stage.getScene().setRoot(mainScene);
+        
+        
+        }));
+        goToAddButton.setOnAction((event -> {
+        stage.getScene().setRoot(secondScene);
+        
+        }));
+        
+        
         
         
         

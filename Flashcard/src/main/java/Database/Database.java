@@ -1,5 +1,6 @@
 package Database;
 
+import Card.Card;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -87,6 +88,30 @@ public class Database {
         ps.close();
         return deckID;
     }
+    public ArrayList<Card> getCards(String Deck){
+        int deckID;
+        try{
+            deckID = getDeckID(Deck);
+        }catch (SQLException e){
+            System.out.println("Deck does not exist");
+            return null;
+        }
+        ArrayList<Card> list = new ArrayList<>();
+        try{
+            PreparedStatement ps = this.database.prepareStatement("SELECT front, sentence, back, backSentence FROM Cards WHERE deckID=?");
+            ps.setInt(1, deckID);
+            ResultSet resultset = ps.executeQuery();
+            while(resultset.next()){
+                list.add(new Card(resultset.getString("front"), resultset.getString("sentence"), resultset.getString("back"), resultset.getString("backSentence")));
+            }
+            ps.close();
+        }catch (SQLException e){
+            System.out.println("Could not get cards");
+            System.out.println(e.toString());
+        }
+        return list;
+    }
+    
     
     
 }
