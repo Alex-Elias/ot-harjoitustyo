@@ -73,6 +73,7 @@ public class Database {
                 list.add(resultset.getString("name"));
             }
             System.out.println("returned Deck");
+            pre.close();
             return list;
         }catch(SQLException e){
             System.out.println("Error: getDecks()");
@@ -94,7 +95,8 @@ public class Database {
             deckID = getDeckID(Deck);
         }catch (SQLException e){
             System.out.println("Deck does not exist");
-            return null;
+            System.out.println(e.toString());
+            return new ArrayList<>();
         }
         ArrayList<Card> list = new ArrayList<>();
         try{
@@ -110,6 +112,33 @@ public class Database {
             System.out.println(e.toString());
         }
         return list;
+    }
+    public boolean isDeckEmpty(String deck){
+        int deckID;
+        try{
+            deckID = getDeckID(deck);
+        }catch (SQLException e){
+            System.out.println("Deck does not exist: is DeckEmpty");
+            System.out.println(e.toString());
+            return true;
+        }
+        try{
+            PreparedStatement ps = this.database.prepareStatement("SELECT COUNT(*)a FROM Cards WHERE deckID=?");
+            ps.setInt(1, deckID);
+            ResultSet resultset = ps.executeQuery();
+            
+            if (resultset.getInt("a") > 0){
+                ps.close();
+                return false;
+            }
+            ps.close();
+        }catch (SQLException e){
+            System.out.println("isDeckEmpty() error");
+            System.out.println(e.toString());
+        }
+        
+        return true;
+        
     }
     
     
