@@ -1,7 +1,7 @@
 package GUI;
 
 import Card.Card;
-import Database.Database;
+import database.Database;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -48,6 +48,7 @@ public class GUI extends Application{
     public void start(Stage stage) throws Exception {
         
         this.db = new Database();
+        this.db.createTables();
         addSceneDeckSelection = new ComboBox();
         //this.deckList = db.getDecks();
         

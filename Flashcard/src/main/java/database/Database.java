@@ -1,4 +1,4 @@
-package Database;
+package database;
 
 import Card.Card;
 import java.sql.*;
@@ -15,7 +15,7 @@ public class Database {
     public Database() throws SQLException{
         this.database = DriverManager.getConnection("jdbc:sqlite:flashcard.db");
         this.statement = database.createStatement();
-        this.createTables();
+        //this.createTables();
         
     } 
     public void createTables(){
@@ -139,6 +139,18 @@ public class Database {
         
         return true;
         
+    }
+    public void dropTables(){
+        try{
+            PreparedStatement ps = this.database.prepareStatement("DROP TABLE IF EXISTS Cards");
+            ps.execute();
+            ps = this.database.prepareStatement("DROP TABLE IF EXISTS Decks");
+            ps.execute();
+            ps.close();
+        }catch (SQLException e){
+            System.out.println("Error: error at dropTables method");
+            System.out.println(e.toString());
+        }
     }
     
     
