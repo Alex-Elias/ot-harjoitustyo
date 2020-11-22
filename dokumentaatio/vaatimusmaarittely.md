@@ -12,15 +12,15 @@ The application can have multiple different users with their own set of decks.
 
 ### Before signing in
 
-- The user can create a new unique account
-- The user can sign into an existing account
+- The user can create a new unique account -done
+- The user can sign into an existing account - sort of done
 
 ### After signing in
 
-- The list of different decks will appear
-- The user can create a new deck or add flashcards to an existing deck
-- The user can review a deck
-- The user can sign out
+- The list of different decks will appear -done
+- The user can create a new deck or add flashcards to an existing deck -done
+- The user can review a deck -mostly done
+- The user can sign out - sort of done
 
 ### Possible improvements and expansions
 

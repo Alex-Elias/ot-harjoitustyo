@@ -9,3 +9,6 @@
 |13.11.2020|3|Focused on creating the database and useful methods|
 |14.11.2020|3|Worked more on the GUI and made the program executable|
 |14.11.2020|2|Started making tests for the database class, fixed some bugs|
+|20.11.2020|1|Added Users table to the database|
+|21.11.2020|2|Added User selection and creation scenes to the GUI|
+|22.11.2020|8|Added the spaced repetition functionality| 

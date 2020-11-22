@@ -18,52 +18,52 @@ public class SRS {
     private double increaseAmount = 2.5;
     private double size;
     
-    public SRS(ArrayList<Card> cardList, ArrayList<Card> newCardList){
+    public SRS(ArrayList<Card> cardList, ArrayList<Card> newCardList) {
         this.queue = new PriorityQueue<>(new CustomCardComparator());
         this.cardList = cardList;
         this.newCardList = newCardList;
         
-        if (!newCardList.isEmpty()){
+        if (!newCardList.isEmpty()) {
             this.size = cardList.size() / newCardList.size();
 
-        }else{
+        } else { 
             this.size = -1;
         }
         
     }
     /// check!!!!!
-    public Card getNextCard(){
-        if (this.queue.isEmpty()){
-            if (!this.cardList.isEmpty()){
+    public Card getNextCard() {
+        if (this.queue.isEmpty()) {
+            if (!this.cardList.isEmpty()) {
                 Card card = cardList.get(0);
                 cardList.remove(0);
                 return card;
             }
-            if (!newCardList.isEmpty()){
+            if (!newCardList.isEmpty()) {
                 Card card = newCardList.get(0);
                 newCardList.remove(0);
                 return card;
             }
-            return new Card("congratulations","You finished studying this deck for today",null,null,true);
+            return new Card("congratulations", "You finished studying this deck for today", null, null, true);
         }
         LocalTime time = LocalTime.now();
         int value = time.compareTo(this.queue.peek().getPriority());
-        if (value > 0){
+        if (value > 0) {
             return this.queue.poll();
         }
-        if (this.size == -1 && !this.cardList.isEmpty()){
+        if (this.size == -1 && !this.cardList.isEmpty()) {
             Card card = cardList.get(0);
             cardList.remove(0);
             return card;
         }
-        if (!this.newCardList.isEmpty()){
+        if (!this.newCardList.isEmpty()) {
             double ratio = this.cardList.size() / this.newCardList.size();
             
-            if (ratio > this.size){
+            if (ratio > this.size) {
                 Card card = cardList.get(0);
                 cardList.remove(0);
                 return card;
-            }else{
+            } else {
                 Card card = newCardList.get(0);
                 newCardList.remove(0);
                 return card;  
@@ -72,7 +72,7 @@ public class SRS {
         return this.queue.poll();
         
     }
-    public void addCard(Card card, int interval){
+    public void addCard(Card card, int interval) {
         LocalTime lt = LocalTime.now();
         lt = lt.plusMinutes(interval);
         card.setPriority(lt);
@@ -85,7 +85,7 @@ public class SRS {
 class CustomCardComparator implements Comparator<Card> {
     
     @Override
-    public int compare (Card o1, Card o2) {
+    public int compare(Card o1, Card o2) {
         int value = o1.getPriority().compareTo(o2.getPriority());
         return value;
         

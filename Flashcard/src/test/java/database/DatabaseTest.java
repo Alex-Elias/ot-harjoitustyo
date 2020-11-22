@@ -77,6 +77,22 @@ public class DatabaseTest {
         this.database.addDeck("t","Test");
         assertTrue(this.database.getCards("Test").isEmpty());
     }
+    @Test
+    public void testIsDeckEmpty(){
+        this.database.addDeck("t","test");
+        assertTrue(this.database.isDeckEmpty("test"));
+    }
+    @Test
+    public void testCanAddUser(){
+        this.database.addUser("test");
+        assertEquals(2, this.database.getUsers().size());
+    }
+    @Test
+    public void testIsDeckEmpty2(){
+        this.database.addDeck("t", "Test");
+        this.database.addCard("t", "e", "s", "t", "Test");
+        assertFalse(this.database.isDeckEmpty("Test"));
+    }
     
     
     
