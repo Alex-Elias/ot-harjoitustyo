@@ -1,7 +1,7 @@
 
 package database;
 
-import Card.Card;
+import datastructures.Card;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import org.junit.After;
@@ -28,6 +28,7 @@ public class DatabaseTest {
             this.database = new Database();
             this.database.dropTables();
             this.database.createTables();
+            this.database.addUser("t");
         }catch (SQLException e){
             System.out.println("Test set up error");
         }
@@ -35,11 +36,11 @@ public class DatabaseTest {
     
     @Test
     public void testCanAddDecks(){
-        this.database.addDeck("Test0");
-        this.database.addDeck("Test1");
-        this.database.addDeck("Test2");
+        this.database.addDeck("t","Test0");
+        this.database.addDeck("t","Test1");
+        this.database.addDeck("t","Test2");
         
-        assertEquals(3, this.database.getDecks().size());
+        assertEquals(3, this.database.getDecks("t").size());
     }
     @After
     public void tearDown(){
@@ -49,11 +50,11 @@ public class DatabaseTest {
     
     @Test
     public void testCanReturnDecks(){
-        this.database.addDeck("Test0");
-        this.database.addDeck("Test1");
-        this.database.addDeck("Test2");
+        this.database.addDeck("t","Test0");
+        this.database.addDeck("t","Test1");
+        this.database.addDeck("t","Test2");
         
-        ArrayList<String> decks = this.database.getDecks();
+        ArrayList<String> decks = this.database.getDecks("t");
         assertTrue(decks.contains("Test0"));
         assertTrue(decks.contains("Test1"));
         assertTrue(decks.contains("Test2"));
@@ -61,19 +62,19 @@ public class DatabaseTest {
     
     @Test
     public void testReturnsNoDecksWhenEmpty(){
-        assertTrue(this.database.getDecks().isEmpty());
+        assertTrue(this.database.getDecks("t").isEmpty());
     }
     
     @Test
     public void testCanAddCards(){
-        this.database.addDeck("Lamb");
+        this.database.addDeck("t","Lamb");
         this.database.addCard("Mary", "Had", "A", "Little", "Lamb");
-        ArrayList<Card> cardlist = this.database.getCards("Lamb");
+        ArrayList<Card> cardlist = this.database.getNewCards("Lamb");
         assertEquals(1, cardlist.size());
     }
     @Test
     public void testReturnsNoCardsWhenEmpty(){
-        this.database.addDeck("Test");
+        this.database.addDeck("t","Test");
         assertTrue(this.database.getCards("Test").isEmpty());
     }
     

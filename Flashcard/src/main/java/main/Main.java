@@ -1,7 +1,7 @@
 package main;
 
 
-import GUI.GUI;
+import gui.GUI;
 
 
 /**
