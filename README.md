@@ -34,4 +34,12 @@ The Project can be run with the command
 `mvn compile exec:java -Dexec.mainClass=main.Main`
 
 
+### Checkstyle
 
+Checkstyle can be run with the command
+
+
+`mvn jxr:jxr checkstyle:checkstyle`
+
+
+The possible fixes can be found at *target/site/checkstyle.html*
