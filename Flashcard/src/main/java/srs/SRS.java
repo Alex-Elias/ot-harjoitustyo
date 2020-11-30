@@ -14,14 +14,22 @@ public class SRS {
     private PriorityQueue<Card> queue;
     private ArrayList<Card> cardList;
     private ArrayList<Card> newCardList;
+    private ArrayList<Card> learningList;
     
     private double increaseAmount = 2.5;
     private double size;
     
-    public SRS(ArrayList<Card> cardList, ArrayList<Card> newCardList) {
+    public SRS(ArrayList<Card> cardList, ArrayList<Card> newCardList, ArrayList<Card> learningList) {
         this.queue = new PriorityQueue<>(new CustomCardComparator());
         this.cardList = cardList;
         this.newCardList = newCardList;
+        this.learningList = learningList;
+        
+        if (!this.learningList.isEmpty()) {
+            for (Card card : this.learningList) {
+                this.addCard(card, card.getInterval());
+            }
+        }
         
         if (!newCardList.isEmpty()) {
             this.size = cardList.size() / newCardList.size();
@@ -44,7 +52,7 @@ public class SRS {
                 newCardList.remove(0);
                 return card;
             }
-            return new Card("congratulations", "You finished studying this deck for today", null, null, true);
+            return null;
         }
         LocalTime time = LocalTime.now();
         int value = time.compareTo(this.queue.peek().getPriority());
@@ -72,6 +80,13 @@ public class SRS {
         return this.queue.poll();
         
     }
+    public ArrayList<Card> getLearningCards(){
+        ArrayList<Card> list = new ArrayList<>();
+        while (!queue.isEmpty()){
+            list.add(queue.poll());
+        }
+        return list;
+    }
     public void addCard(Card card, int interval) {
         LocalTime lt = LocalTime.now();
         lt = lt.plusMinutes(interval);
@@ -79,6 +94,9 @@ public class SRS {
         this.queue.add(card);
         
         
+    }
+    public ArrayList<Card> getNewCards(){
+        return this.newCardList;
     }
     
 }

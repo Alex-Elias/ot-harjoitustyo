@@ -30,6 +30,7 @@ public class GUI extends Application{
     Database db;
     ArrayList<Card> cardList;
     private ArrayList<Card> newCardList;
+    private ArrayList<Card> learningList;
     private SRS srs;
     private int place;
     private Card card;
@@ -239,7 +240,7 @@ public class GUI extends Application{
             String back = addSceneBackText.getText();
             String backSentence = addSceneBackSentenceText.getText();
             String deck = (String) addSceneDeckSelection.getValue();
-            this.db.addCard(front, sentence, back, backSentence, deck);
+            this.db.addNewCard(front, sentence, back, backSentence, deck);
             addScenefrontText.clear();
             addSceneSentenceText.clear();
             addSceneBackText.clear();
@@ -351,21 +352,20 @@ public class GUI extends Application{
             this.deck = (String) deckSelectionBox.getValue();
             this.cardList = this.db.getCards(deck);
             this.newCardList = this.db.getNewCards(deck);
-            this.srs = new SRS(this.cardList, this.newCardList);
+            this.learningList = this.db.getLearningCards(deck);
+            this.srs = new SRS(this.cardList, this.newCardList, this.learningList);
             
            this.nextCard();
         }));
         
         cardSceneHardButton.setOnAction((event -> {
         
-            if (this.card.isNew() && hard == 1){
-                
-                this.db.addCardToDatabase(card, this.deck, hard);
-            }else if (this.card.isNew()){
+            
+            if (this.card.isNew() && hard != 1) {
                 this.card.setInterval(hard);
                 this.srs.addCard(card, hard);
-            }else {
-                this.db.updateCard(card, deck, hard);
+            } else {
+                this.db.addCard(card, deck, hard);
             }
             this.nextCard();
         
@@ -373,24 +373,19 @@ public class GUI extends Application{
         
         cardSceneGoodButton.setOnAction((event -> {
         
-            if (this.card.isNew() && good == 1){
-                this.db.addCardToDatabase(card, deck, good);
-            }else if (this.card.isNew()){
+            
+            if (this.card.isNew() && good != 1) {
                 this.card.setInterval(good);
                 this.srs.addCard(card, good);
-            }else {
-                this.db.updateCard(card, deck, good);
+            } else {
+                this.db.addCard(card, deck, good);
             }
             this.nextCard();
         }));
         
         cardSceneEasyButton.setOnAction((event -> {
         
-            if (easy == 1){
-                this.db.addCardToDatabase(card, deck, easy);
-            }else {
-                this.db.updateCard(card, deck, easy);
-            }
+            this.db.addCard(card, deck, easy);
             this.nextCard();
         }));
         
@@ -447,12 +442,14 @@ public class GUI extends Application{
         }));
         cardSceneReturnToDeckButton.setOnAction((event -> {
             this.updateDeckList();
+            this.card = null;
             stage.getScene().setRoot(deckSelectionScene);
         
         
         }));
         cardSceneGoToAddButton.setOnAction((event -> {
             this.updateDeckList();
+            this.card = null;
             stage.getScene().setRoot(addCardScene);
         
         }));
@@ -507,8 +504,38 @@ public class GUI extends Application{
         stage.setMinHeight(250);
         stage.setMinWidth(250);
         stage.show();
+        stage.setOnCloseRequest((event ->{
+            ArrayList<Card> list;
+            try {
+                list = this.srs.getLearningCards();
+                for (Card card : list) {
+                    this.db.addLearningCard(card, deck);
+                }
+                System.out.println("no error");
+            } catch (Exception e) {
+                System.out.println(e.toString());
+                
+            }
+            try {
+                list = this.srs.getLearningCards();
+                for (Card card : list) {
+                    this.db.addNewCard(card.getFront(), card.getSentence(), card.getBack(), card.getBackSentence(), deck);
+                }
+            } catch (Exception e) {
+                System.out.println(e.toString());
+            }
+            if (this.card != null) {
+                this.db.addLearningCard(this.card, deck);
+            }
+            
+            stage.close();
+            
+        
+        }));
         
     }
+    
+    
     public void runGUI(){
         launch(GUI.class);
     }
@@ -537,6 +564,18 @@ public class GUI extends Application{
     }
     private void nextCard(){
         this.card = this.srs.getNextCard();
+        if (this.card == null) {
+            this.cardSceneFrontText.setText("Congratulations!");
+            this.cardSceneSentenceText.setText("You finished studing this deck for today");
+            
+            this.cardSceneBackText.setVisible(false);
+            this.cardSceneBackSentenceText.setVisible(false);
+            cardSceneHardButton.setVisible(false);
+            cardSceneGoodButton.setVisible(false);
+            cardSceneEasyButton.setVisible(false);
+            cardSceneAgainButton.setVisible(false);
+            return;
+        }
             
             
         if (card.isNew() && card.getPriority() == null){

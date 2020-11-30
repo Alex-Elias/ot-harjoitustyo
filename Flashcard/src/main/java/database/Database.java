@@ -28,12 +28,15 @@ public class Database {
             this.statement.execute("CREATE TABLE Users (id INTEGER PRIMARY KEY, name TEXT UNIQUE)");
             this.statement.execute("CREATE TABLE NewCards (id INTEGER PRIMARY KEY, front TEXT UNIQUE, sentence TEXT, back TEXT,"
                 + " backSentence TEXT, deckID INTEGER REFERENCES Decks)");
+            this.statement.execute("CREATE TABLE Learning (id INTEGER PRIMARY KEY, front TEXT UNIQUE, sentence TEXT, back TEXT,"
+                + " backSentence TEXT, deckID INTEGER REFERENCES Decks, interval INTEGER)");
             System.out.println("Tables created");
         } catch (SQLException e) {
             System.out.println("Tables already exist");
+            System.out.println(e.toString());
         }
     }
-    public void addCard(String front, String sentence, String back, String backSentence, String deck) {
+    public void addNewCard(String front, String sentence, String back, String backSentence, String deck) {
         int deckID;
         try {
             deckID = this.getDeckID(deck);
@@ -237,8 +240,41 @@ public class Database {
         return list;
         
     }
+    public ArrayList<Card> getLearningCards(String deck) {
+        int deckID;
+        try {
+            deckID = getDeckID(deck);
+        } catch (SQLException e) {
+            System.out.println("Deck does not exist");
+            System.out.println(e.toString());
+            return new ArrayList<>();
+        }
+        ArrayList<Card> list = new ArrayList<>();
+        try {
+            PreparedStatement ps = this.database.prepareStatement("SELECT front, sentence, back, backSentence, interval FROM Learning WHERE deckID=?");
+            ps.setInt(1, deckID);
+            ResultSet resultset = ps.executeQuery();
+            while (resultset.next()) {
+                list.add(new Card(resultset.getString("front"), resultset.getString("sentence"), resultset.getString("back"), resultset.getString("backSentence"), true, resultset.getInt("interval")));
+            }
+            for (Card card : list) {
+                ps = this.database.prepareStatement("DELETE FROM Learning WHERE deckID=? AND front=? AND sentence=? AND back=?");
+                ps.setInt(1, deckID);
+                ps.setString(2, card.getFront());
+                ps.setString(3, card.getSentence());
+                ps.setString(4, card.getBack());
+                ps.execute();
+            }
+            ps.close();
+        } catch (SQLException e) {
+            System.out.println("Could not get cards: learning");
+            System.out.println(e.toString());
+        }
+        return list;
+        
+    }
     
-    /// finish this!!!!
+    
     public void updateCard(Card card, String deck, int interval) {
         int deckID;
         try {
@@ -283,16 +319,21 @@ public class Database {
             ps = this.database.prepareStatement("SELECT COUNT(*)a FROM NewCards WHERE deckID=?");
             ps.setInt(1, deckID);
             ResultSet resultset2 = ps.executeQuery();
+            ps = this.database.prepareStatement("SELECT COUNT (*)a FROM Learning WHERE deckID=?");
+            ps.setInt(1, deckID);
+            ResultSet resultset3 = ps.executeQuery();
             
-            if (resultset.getInt("a") > 0 || resultset2.getInt("a") > 0) {
+            if (resultset.getInt("a") > 0 || resultset2.getInt("a") > 0 || resultset3.getInt("a") > 0) {
                 ps.close();
                 resultset.close();
                 resultset2.close();
+                resultset3.close();
                 return false;
             }
             ps.close();
             resultset.close();
             resultset2.close();
+            resultset3.close();
         } catch (SQLException e) {
             System.out.println("isDeckEmpty() error");
             System.out.println(e.toString());
@@ -301,6 +342,69 @@ public class Database {
         return true;
         
     }
+    
+    public boolean doesCardExist(Card card, String deck) {
+        int deckID;
+        try {
+            deckID = getDeckID(deck);
+        } catch (SQLException e) {
+            System.out.println("could not get deck: doesCardExist");
+            return false;
+        }
+        try {
+            PreparedStatement ps = this.database.prepareStatement("SELECT COUNT(1)a FROM Cards WHERE deckID=? AND front=? AND sentence=? AND back=? AND backSentence=?");
+            ps.setInt(1, deckID);
+            ps.setString(2, card.getFront());
+            ps.setString(3, card.getSentence());
+            ps.setString(4, card.getBack());
+            ps.setString(5, card.getBackSentence());
+            ResultSet rs = ps.executeQuery();
+            if (rs.getInt("a") == 1){
+                return true;
+            }
+            ps.close();
+            rs.close();
+            
+        } catch (SQLException e) {
+            System.out.println("Error: doesCardExist()");
+        }
+        return false;
+    }
+    
+    public void addCard(Card card, String deck, int interval) {
+        if (this.doesCardExist(card, deck)) {
+            this.updateCard(card, deck, interval);
+        } else {
+            this.addCardToDatabase(card, deck, interval);
+        }
+    }
+    // finish
+    public void addLearningCard(Card card, String deck) {
+        int deckID;
+        try {
+            deckID = getDeckID(deck);
+        } catch (SQLException e) {
+            System.out.println("could not get deck: doesCardExist");
+            return;
+        }
+        try {
+            PreparedStatement ps = this.database.prepareStatement("INSERT INTO Learning (front, sentence, back, backSentence, deckID, interval) VALUES(?,?,?,?,?,?)");
+            ps.setString(1, card.getFront());
+            ps.setString(2, card.getSentence());
+            ps.setString(3, card.getBack());
+            ps.setString(4, card.getBackSentence());
+            ps.setInt(5, deckID);
+            ps.setInt(6, card.getInterval());
+            ps.execute();
+        } catch (SQLException e) {
+            System.out.println("Error: addLearningCard()");
+            System.out.println(e.toString());
+        }
+    }
+    
+    
+    
+    
     public void dropTables() {
         try {
             PreparedStatement ps = this.database.prepareStatement("DROP TABLE IF EXISTS Cards");
@@ -310,6 +414,8 @@ public class Database {
             ps = this.database.prepareStatement("DROP TABLE IF EXISTS Users");
             ps.execute();
             ps = this.database.prepareStatement("DROP TABLE IF EXISTS NewCards");
+            ps.execute();
+            ps = this.database.prepareStatement("DROP TABLE IF EXISTS Learning");
             ps.execute();
             ps.close();
         } catch (SQLException e) {

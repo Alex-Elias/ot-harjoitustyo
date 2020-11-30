@@ -68,7 +68,7 @@ public class DatabaseTest {
     @Test
     public void testCanAddCards(){
         this.database.addDeck("t","Lamb");
-        this.database.addCard("Mary", "Had", "A", "Little", "Lamb");
+        this.database.addNewCard("Mary", "Had", "A", "Little", "Lamb");
         ArrayList<Card> cardlist = this.database.getNewCards("Lamb");
         assertEquals(1, cardlist.size());
     }
@@ -90,7 +90,7 @@ public class DatabaseTest {
     @Test
     public void testIsDeckEmpty2(){
         this.database.addDeck("t", "Test");
-        this.database.addCard("t", "e", "s", "t", "Test");
+        this.database.addNewCard("t", "e", "s", "t", "Test");
         assertFalse(this.database.isDeckEmpty("Test"));
     }
     
