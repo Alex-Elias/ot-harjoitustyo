@@ -8,6 +8,13 @@ This is the README.md document for the repository ot-harjoitustyo for the class 
 [Työaikakirjanpito](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
 
+## Releases
+
+### Week 5
+
+[Week 5 release](https://github.com/Alex-Elias/ot-harjoitustyo/releases/tag/viikko5)
+
+
 ## Commands
 
 ### Testing
