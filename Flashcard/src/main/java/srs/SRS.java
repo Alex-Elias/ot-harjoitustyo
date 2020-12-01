@@ -80,9 +80,9 @@ public class SRS {
         return this.queue.poll();
         
     }
-    public ArrayList<Card> getLearningCards(){
+    public ArrayList<Card> getLearningCards() {
         ArrayList<Card> list = new ArrayList<>();
-        while (!queue.isEmpty()){
+        while (!queue.isEmpty()) {
             list.add(queue.poll());
         }
         return list;
@@ -95,7 +95,7 @@ public class SRS {
         
         
     }
-    public ArrayList<Card> getNewCards(){
+    public ArrayList<Card> getNewCards() {
         return this.newCardList;
     }
     

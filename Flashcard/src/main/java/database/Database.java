@@ -359,7 +359,7 @@ public class Database {
             ps.setString(4, card.getBack());
             ps.setString(5, card.getBackSentence());
             ResultSet rs = ps.executeQuery();
-            if (rs.getInt("a") == 1){
+            if (rs.getInt("a") == 1) {
                 ps.close();
                 rs.close();
                 return true;
