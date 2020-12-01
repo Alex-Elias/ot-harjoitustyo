@@ -12,7 +12,6 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -304,7 +303,7 @@ public class GUI extends Application{
         HBox cardSceneBottomHBox = new HBox(20);
         
         Button cardSceneShowButton = new Button("Show");
-        Button cardSceneNextButton = new Button("Next");
+        
         
         cardSceneHardButton = new Button();
         cardSceneGoodButton = new Button();
@@ -323,7 +322,7 @@ public class GUI extends Application{
         
         
         
-        cardSceneBottomHBox.getChildren().addAll(cardSceneShowButton,cardSceneAgainButton, cardSceneHardButton, cardSceneGoodButton, cardSceneEasyButton, cardSceneNextButton);
+        cardSceneBottomHBox.getChildren().addAll(cardSceneShowButton,cardSceneAgainButton, cardSceneHardButton, cardSceneGoodButton, cardSceneEasyButton);
         cardSceneVBox.getChildren().add(cardSceneBottomHBox);
         
         CardScene.add(cardSceneVBox, 0,0);

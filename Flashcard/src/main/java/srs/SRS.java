@@ -39,7 +39,7 @@ public class SRS {
         }
         
     }
-    /// check!!!!!
+    
     public Card getNextCard() {
         if (this.queue.isEmpty()) {
             if (!this.cardList.isEmpty()) {

@@ -360,6 +360,8 @@ public class Database {
             ps.setString(5, card.getBackSentence());
             ResultSet rs = ps.executeQuery();
             if (rs.getInt("a") == 1){
+                ps.close();
+                rs.close();
                 return true;
             }
             ps.close();
@@ -368,6 +370,7 @@ public class Database {
         } catch (SQLException e) {
             System.out.println("Error: doesCardExist()");
         }
+        
         return false;
     }
     
@@ -378,7 +381,7 @@ public class Database {
             this.addCardToDatabase(card, deck, interval);
         }
     }
-    // finish
+    
     public void addLearningCard(Card card, String deck) {
         int deckID;
         try {
