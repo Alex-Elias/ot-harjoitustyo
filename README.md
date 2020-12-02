@@ -1,6 +1,6 @@
-# Ohjelmistotekniikka syksy 2020
+# Spaced Repetition Flashcard App
 
-This is the README.md document for the repository ot-harjoitustyo for the class **Ohjelmistotekniikka** at the *University of Helsinki*. 
+With the help of this app the user is able to create and study different flashcards in a spaced repetition. This app is able to save multiple users with multiple decks for each user.
 
 ## Documentation
 [Vaatimusmäärittely](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
@@ -39,6 +39,15 @@ The Project can be run with the command
 
 
 `mvn compile exec:java -Dexec.mainClass=main.Main`
+
+
+The Jar file can be created with the command
+
+
+`mvn package`
+
+
+The generated jar file can be found in the *target* directory under the name **Flashcard-1.0-SNAPSHOT.jar**
 
 
 ### Checkstyle
