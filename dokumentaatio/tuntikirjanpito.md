@@ -15,4 +15,5 @@
 |28.11.2020|1|Added another table to the database|
 |29.11.2020|4|Added functionality to save then resume the cards not yet finished studying|
 |30.11.2020|3|Created more tests|
-|combined|31| 
+|08.12.2020|2|Created Controller class|
+|combined|33| 

@@ -1,5 +1,6 @@
 package gui;
 
+import controller.Controller;
 import datastructures.Card;
 import database.Database;
 import java.util.ArrayList;
@@ -26,14 +27,9 @@ import srs.SRS;
  */
 public class GUI extends Application{
     
-    Database db;
-    ArrayList<Card> cardList;
-    private ArrayList<Card> newCardList;
-    private ArrayList<Card> learningList;
-    private SRS srs;
-    private int place;
-    private Card card;
-    private String deck;
+    Controller controll;
+    
+    
     
     private TextArea cardSceneFrontText;
     private TextArea cardSceneSentenceText;
@@ -48,11 +44,7 @@ public class GUI extends Application{
     
     private ArrayList<String> deckList;
     
-    private String user;
     
-    private int hard;
-    private int good;
-    private int easy;
     
     private Button cardSceneHardButton;
     private Button cardSceneGoodButton;
@@ -65,12 +57,12 @@ public class GUI extends Application{
     @Override
     public void start(Stage stage) throws Exception {
         
-        this.db = new Database();
-        this.db.createTables();
+        this.controll = new Controller();
+        this.controll.createTables();
         addSceneDeckSelection = new ComboBox();
-        //this.deckList = db.getDecks();
+        //this.deckList = controll.getDecks();
         
-        // Main deck selection scene 
+        // Main deck selection scene -----------------------------------------------
         GridPane deckSelectionScene = new GridPane();
         deckSelectionScene.setPadding(new Insets(50,10,10,50));
         deckSelectionScene.setMinSize(750,750);
@@ -122,7 +114,7 @@ public class GUI extends Application{
         Label userUserLabel = new Label("Users");
         
         ComboBox userComboBox = new ComboBox();
-        ArrayList<String> userList = this.db.getUsers();
+        ArrayList<String> userList = this.controll.getUsers();
         userComboBox.setItems(FXCollections.observableArrayList(userList));
         userComboBox.getSelectionModel().selectFirst();
         userVBox.getChildren().addAll(userCreateUserButton, userUserLabel, userComboBox, userSelectUserButton);
@@ -167,7 +159,7 @@ public class GUI extends Application{
         
             String user = addUserTextBox.getText();
             
-            this.db.addUser(user);
+            this.controll.addUser(user);
             addUserTextBox.clear();
             
         
@@ -175,7 +167,7 @@ public class GUI extends Application{
         
         addUserBackButton.setOnAction((event -> {
         
-            ArrayList<String> adduserList = this.db.getUsers();
+            ArrayList<String> adduserList = this.controll.getUsers();
             userComboBox.setItems(FXCollections.observableArrayList(adduserList));
             userComboBox.getSelectionModel().selectFirst();
             
@@ -211,18 +203,22 @@ public class GUI extends Application{
         TextArea addScenefrontText = new TextArea();
         addScenefrontText.setMaxHeight(20);
         addScenefrontText.setFont(new Font(20));
+        addScenefrontText.setWrapText(true);
         
         Label addSceneSentenceLabel = new Label("Sentence:");
         TextArea addSceneSentenceText = new TextArea();
+        addSceneSentenceText.setWrapText(true);
         addSceneSentenceText.setFont(new Font(20));
         
         Label addSceneBackLabel = new Label("Back:");
         TextArea addSceneBackText = new TextArea();
         addSceneBackText.setMaxHeight(20);
+        addSceneBackText.setWrapText(true);
         addSceneBackText.setFont(new Font(20));
         
         Label addSceneBackSentenceLabel = new Label("Back Sentence:");
         TextArea addSceneBackSentenceText = new TextArea();
+        addSceneBackSentenceText.setWrapText(true);
         addSceneBackSentenceText.setFont(new Font(20));
         
         Button addSceneAddCardButton = new Button("Add");
@@ -239,7 +235,7 @@ public class GUI extends Application{
             String back = addSceneBackText.getText();
             String backSentence = addSceneBackSentenceText.getText();
             String deck = (String) addSceneDeckSelection.getValue();
-            this.db.addNewCard(front, sentence, back, backSentence, deck);
+            this.controll.addNewCard(front, sentence, back, backSentence, deck);
             addScenefrontText.clear();
             addSceneSentenceText.clear();
             addSceneBackText.clear();
@@ -282,20 +278,24 @@ public class GUI extends Application{
         cardSceneFrontText.setMaxHeight(20);
         cardSceneFrontText.setFont(new Font(20));
         cardSceneFrontText.setEditable(false);
+        cardSceneFrontText.setWrapText(true);
         Label cardSceneSentenceLabel = new Label("Sentence:");
         cardSceneSentenceText = new TextArea();
         cardSceneSentenceText.setFont(new Font(20));
         cardSceneSentenceText.setEditable(false);
+        cardSceneSentenceText.setWrapText(true);
         //sentenceLabelcard.setMaxHeight(40);
         Label cardSceneBackLabel = new Label("Back:");
         cardSceneBackText = new TextArea();
         cardSceneBackText.setMaxHeight(20);
         cardSceneBackText.setFont(new Font(20));
         cardSceneBackText.setEditable(false);
+        cardSceneBackText.setWrapText(true);
         Label cardSceneBackSentenceLabel = new Label("Back Sentence:");
         cardSceneBackSentenceText = new TextArea();
         cardSceneBackSentenceText.setFont(new Font(20));
         cardSceneBackSentenceText.setEditable(false);
+        cardSceneBackSentenceText.setWrapText(true);
         //backSentenceLabelcard.setMaxHeight(40);
         
         cardSceneVBox.getChildren().addAll(cardSceneFrontLabel, cardSceneFrontText, cardSceneSentenceLabel, cardSceneSentenceText, cardSceneBackLabel, cardSceneBackText,
@@ -315,10 +315,8 @@ public class GUI extends Application{
         cardSceneEasyButton.setStyle("-fx-text-fill: green");
         cardSceneAgainButton.setStyle("-fx-text-fill: red");
         
-        cardSceneHardButton.setVisible(false);
-        cardSceneGoodButton.setVisible(false);
-        cardSceneEasyButton.setVisible(false);
-        cardSceneAgainButton.setVisible(false);
+        
+        this.setButtonsVisible(false);
         
         
         
@@ -332,11 +330,8 @@ public class GUI extends Application{
             
             this.cardSceneBackText.setVisible(true);
             this.cardSceneBackSentenceText.setVisible(true);
+            this.setButtonsVisible(true);
             
-            cardSceneHardButton.setVisible(true);
-            cardSceneGoodButton.setVisible(true);
-            cardSceneEasyButton.setVisible(true);
-            cardSceneAgainButton.setVisible(true);
         
         }));
         
@@ -346,26 +341,18 @@ public class GUI extends Application{
         
         
         studyDeckButton.setOnAction((event -> {
-            this.place = 0;
-            stage.getScene().setRoot(CardScene);
-            this.deck = (String) deckSelectionBox.getValue();
-            this.cardList = this.db.getCards(deck);
-            this.newCardList = this.db.getNewCards(deck);
-            this.learningList = this.db.getLearningCards(deck);
-            this.srs = new SRS(this.cardList, this.newCardList, this.learningList);
             
-           this.nextCard();
+            stage.getScene().setRoot(CardScene);
+            this.controll.setDeck((String) deckSelectionBox.getValue());
+            this.controll.initSRS();
+            
+            this.nextCard();
         }));
         
         cardSceneHardButton.setOnAction((event -> {
         
             
-            if (this.card.isNew() && hard != 1) {
-                this.card.setInterval(hard);
-                this.srs.addCard(card, hard);
-            } else {
-                this.db.addCard(card, deck, hard);
-            }
+            this.controll.hard();
             this.nextCard();
         
         }));
@@ -373,25 +360,19 @@ public class GUI extends Application{
         cardSceneGoodButton.setOnAction((event -> {
         
             
-            if (this.card.isNew() && good != 1) {
-                this.card.setInterval(good);
-                this.srs.addCard(card, good);
-            } else {
-                this.db.addCard(card, deck, good);
-            }
+            this.controll.good();
             this.nextCard();
         }));
         
         cardSceneEasyButton.setOnAction((event -> {
         
-            this.db.addCard(card, deck, easy);
+            this.controll.easy();
             this.nextCard();
         }));
         
         cardSceneAgainButton.setOnAction((event -> {
         
-            this.card.setInterval(1);
-            this.srs.addCard(card, 1);
+            this.controll.again();
             this.nextCard();
         }));
         
@@ -400,7 +381,7 @@ public class GUI extends Application{
         deckAddAddDeckButton.setOnAction((event -> {
         
             String deckName = deckAddNameField.getText();
-            db.addDeck(this.user, deckName);
+            controll.addDeck(deckName);
             deckAddNameField.clear();
         
         }));
@@ -441,14 +422,16 @@ public class GUI extends Application{
         }));
         cardSceneReturnToDeckButton.setOnAction((event -> {
             this.updateDeckList();
-            this.card = null;
+            this.controll.setCardNull();
+            
             stage.getScene().setRoot(deckSelectionScene);
         
         
         }));
         cardSceneGoToAddButton.setOnAction((event -> {
             this.updateDeckList();
-            this.card = null;
+            this.controll.setCardNull();
+            
             stage.getScene().setRoot(addCardScene);
         
         }));
@@ -472,7 +455,8 @@ public class GUI extends Application{
             
             String tempUser = (String) userComboBox.getValue();
             
-            this.user = tempUser;
+            
+            this.controll.setUser(tempUser);
             
             
             
@@ -504,28 +488,7 @@ public class GUI extends Application{
         stage.setMinWidth(250);
         stage.show();
         stage.setOnCloseRequest((event ->{
-            ArrayList<Card> list;
-            try {
-                list = this.srs.getLearningCards();
-                for (Card card : list) {
-                    this.db.addLearningCard(card, deck);
-                }
-                System.out.println("no error");
-            } catch (Exception e) {
-                System.out.println(e.toString());
-                
-            }
-            try {
-                list = this.srs.getLearningCards();
-                for (Card card : list) {
-                    this.db.addNewCard(card.getFront(), card.getSentence(), card.getBack(), card.getBackSentence(), deck);
-                }
-            } catch (Exception e) {
-                System.out.println(e.toString());
-            }
-            if (this.card != null) {
-                this.db.addLearningCard(this.card, deck);
-            }
+            this.controll.close();
             
             stage.close();
             
@@ -540,7 +503,7 @@ public class GUI extends Application{
     }
     private void updateDeckList(){
         
-        deckList = db.getDecks(this.user);
+        deckList = controll.getDecks(this.controll.getUser());
         deckSelectionBox.setItems(FXCollections.observableArrayList(deckList));
         deckSelectionBox.getSelectionModel().selectFirst();
         addSceneDeckSelection.setItems(FXCollections.observableArrayList(deckList));
@@ -553,7 +516,7 @@ public class GUI extends Application{
             this.AddButton.setDisable(true);
             return;
         }
-        if (this.db.isDeckEmpty(deck)){
+        if (this.controll.isDeckEmpty(deck)){
             this.studyDeckButton.setDisable(true);
             this.AddButton.setDisable(false);
         }else{
@@ -562,17 +525,14 @@ public class GUI extends Application{
         }
     }
     private void nextCard(){
-        this.card = this.srs.getNextCard();
-        if (this.card == null) {
+        Card card = this.controll.nextCard();
+        if (card == null) {
             this.cardSceneFrontText.setText("Congratulations!");
             this.cardSceneSentenceText.setText("You finished studing this deck for today");
             
             this.cardSceneBackText.setVisible(false);
             this.cardSceneBackSentenceText.setVisible(false);
-            cardSceneHardButton.setVisible(false);
-            cardSceneGoodButton.setVisible(false);
-            cardSceneEasyButton.setVisible(false);
-            cardSceneAgainButton.setVisible(false);
+            this.setButtonsVisible(false);
             return;
         }
             
@@ -582,9 +542,8 @@ public class GUI extends Application{
             cardSceneGoodButton.setText("Good: 10 minutes");
             cardSceneEasyButton.setText("Easy: 1 Day");
             cardSceneAgainButton.setText("Again: 1 minute");
-            this.hard = 5;
-            this.good = 10;
-            this.easy = 1;
+            this.controll.setIntervals(5,10,1);
+            
         } else if (card.isNew() && card.getPriority() != null){
             int interval = card.getInterval();
             if (interval == 5){
@@ -592,25 +551,21 @@ public class GUI extends Application{
                 cardSceneGoodButton.setText("Good: 1 Day");
                 cardSceneEasyButton.setText("Easy: 1 Day");
                 cardSceneAgainButton.setText("Again: 1 minute");
-                this.hard = 10;
-                this.good = 1;
-                this.easy = 1;
+                this.controll.setIntervals(10, 1, 1);
+                
             }else if (interval == 10){
                 cardSceneHardButton.setText("Hard: 1 Day");
                 cardSceneGoodButton.setText("Good: 1 Day");
                 cardSceneEasyButton.setText("Easy: 1 Day");
                 cardSceneAgainButton.setText("Again: 1 minute");
-                this.hard = 1;
-                this.good = 1;
-                this.easy = 1;
+                this.controll.setIntervals(1, 1, 1);
+                
             }else{
                 cardSceneHardButton.setText("Hard: 5 minutes");
                 cardSceneGoodButton.setText("Good: 10 minutes");
                 cardSceneEasyButton.setText("Easy: 1 Day");
                 cardSceneAgainButton.setText("Again: 1 minute");
-                this.hard = 5;
-                this.good = 10;
-                this.easy = 1;
+                this.controll.setIntervals(5,10,1);
             }
         }else {
             int interval = card.getInterval();
@@ -630,10 +585,8 @@ public class GUI extends Application{
             sb.append(" Days");
             cardSceneEasyButton.setText(sb.toString());
             cardSceneAgainButton.setText("Again: 10 minute");
-
-            this.hard = interval * 2;
-            this.good = interval * 3;
-            this.easy = interval * 4;
+            this.controll.setIntervals(interval * 2, interval * 3, interval * 4);
+            
 
         }
 
@@ -643,10 +596,13 @@ public class GUI extends Application{
         this.cardSceneBackSentenceText.setText(card.getBackSentence());
         this.cardSceneBackText.setVisible(false);
         this.cardSceneBackSentenceText.setVisible(false);
-        cardSceneHardButton.setVisible(false);
-        cardSceneGoodButton.setVisible(false);
-        cardSceneEasyButton.setVisible(false);
-        cardSceneAgainButton.setVisible(false);
+        this.setButtonsVisible(false);
+    }
+    public void setButtonsVisible(boolean b) {
+        cardSceneHardButton.setVisible(b);
+        cardSceneGoodButton.setVisible(b);
+        cardSceneEasyButton.setVisible(b);
+        cardSceneAgainButton.setVisible(b);
     }
     
 }
