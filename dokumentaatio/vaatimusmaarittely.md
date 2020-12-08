@@ -21,7 +21,8 @@ The application can have multiple different users with their own set of decks.
 - The user can create a new deck or add flashcards to an existing deck
 - The user can review a deck
 - The user can sign out
-- The user can resume where they left if they did not finish fully reviewing a deck -Done
+- The user can resume where they left if they did not finish fully reviewing a deck
+- The user can back out of the current deck being studied and the progress is saved - done
 
 ### Possible improvements and expansions
 

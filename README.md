@@ -59,3 +59,12 @@ Checkstyle can be run with the command
 
 
 The possible fixes can be found at *target/site/checkstyle.html*
+
+
+### JavaDocs
+
+JavaDocs can be generated with the command
+
+`mvn javadoc:javadoc`
+
+

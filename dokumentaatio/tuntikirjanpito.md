@@ -16,4 +16,5 @@
 |29.11.2020|4|Added functionality to save then resume the cards not yet finished studying|
 |30.11.2020|3|Created more tests|
 |08.12.2020|2|Created Controller class|
-|combined|33| 
+|08.12.2020|1|Started on JavaDocs and added more tests|
+|combined|34| 
