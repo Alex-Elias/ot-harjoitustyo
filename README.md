@@ -7,6 +7,9 @@ With the help of this app the user is able to create and study different flashca
 
 [Työaikakirjanpito](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/dokumentaatio/tuntikirjanpito.md)
 
+[Arkkitehtuurikuvaus](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/dokumentaatio/arkkitehtuuri.md)
+
+
 
 ## Releases
 
