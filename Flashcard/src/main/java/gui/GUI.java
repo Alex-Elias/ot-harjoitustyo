@@ -420,9 +420,10 @@ public class GUI extends Application{
         }));
         cardSceneReturnToDeckButton.setOnAction((event -> {
             
-            this.updateDeckList();
+            
             this.controll.close();
             this.controll.setCardNull();
+            this.updateDeckList();
             
             stage.getScene().setRoot(deckSelectionScene);
         

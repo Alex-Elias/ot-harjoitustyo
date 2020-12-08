@@ -18,6 +18,9 @@ With the help of this app the user is able to create and study different flashca
 
 [Week 5 release](https://github.com/Alex-Elias/ot-harjoitustyo/releases/tag/viikko5)
 
+### Week 6
+
+[Week 6 release](https://github.com/Alex-Elias/ot-harjoitustyo/releases/tag/viikko6)
 
 ## Commands
 
