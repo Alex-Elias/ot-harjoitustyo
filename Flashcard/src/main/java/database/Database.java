@@ -19,6 +19,15 @@ public class Database {
         //this.createTables();
         
     } 
+    /**
+     * Creates all the tables used in the database
+     * Creates the following tables:
+     *  Cards
+     *  Decks
+     *  Users
+     *  NewCards
+     *  Learning
+     */
     public void createTables() {
         try {
             this.statement.execute("CREATE TABLE Cards (id INTEGER PRIMARY KEY, front TEXT UNIQUE, sentence TEXT, back TEXT,"
@@ -36,12 +45,19 @@ public class Database {
             System.out.println(e.toString());
         }
     }
+    /**
+     * Adds a new card to the NewCards table
+     * @param front the front word
+     * @param sentence the sentence 
+     * @param back the translation of the front word
+     * @param backSentence the translation of the sentence
+     * @param deck the deck which contains the word
+     */
     public void addNewCard(String front, String sentence, String back, String backSentence, String deck) {
         int deckID;
         try {
             deckID = this.getDeckID(deck);
         } catch (SQLException e) {
-            System.out.println("deck does not exist");
             return;
         }
         try {
@@ -51,21 +67,22 @@ public class Database {
             pre.setString(3, back);
             pre.setString(4, backSentence);
             pre.setInt(5, deckID);
-            
             pre.executeUpdate();
-            System.out.println("Added card");
             pre.close();
-        } catch (SQLException e) {
-            System.out.println("Error!");
-        }
+        } catch (SQLException e) { }
         
     }
+    /**
+     * Adds a card to the Cards table
+     * @param card the card to be added
+     * @param deck the deck which contains the card
+     * @param interval the number of days when the card will be reviewed
+     */
     public void addCardToDatabase(Card card, String deck, int interval) {
         int deckID;
         try {
             deckID = this.getDeckID(deck);
-        } catch (SQLException e) {
-            System.out.println("deck does not exist");
+        } catch (SQLException e) { 
             return;
         }
         try {
@@ -79,15 +96,15 @@ public class Database {
             ld = ld.plusDays(interval);
             pre.setDate(6, Date.valueOf(ld));
             pre.setInt(7, interval);
-            
             pre.executeUpdate();
-            System.out.println("Added card");
             pre.close();
-        } catch (SQLException e) {
-            System.out.println("Error!");
-        }
-        
+        } catch (SQLException e) { }      
     }
+    /**
+     * adds a new deck
+     * @param user the user who owns the deck
+     * @param name the name of the new deck
+     */
     public void addDeck(String user, String name) {
         int userID;
         try {
@@ -109,6 +126,10 @@ public class Database {
             System.out.println("Error!");
         }
     }
+    /**
+     * adds a new user
+     * @param user the new user to be added
+     */
     public void addUser(String user) {
         try {
             PreparedStatement pre = this.database.prepareStatement("INSERT INTO Users (name) VALUES(?)");
@@ -121,12 +142,16 @@ public class Database {
             System.out.println("Error: add user");
         }
     }
+    /**
+     * returns a list of decks owned by a certain user
+     * @param user the user which decks will be returned
+     * @return an ArrayList of the names of the decks
+     */
     public ArrayList<String> getDecks(String user) {
         int userID;
         try {
             userID = this.getUserID(user);
         } catch (SQLException e) {
-            System.out.println("Could not get user: get decks");
             return new ArrayList<>();
         } 
         try {
@@ -137,14 +162,15 @@ public class Database {
             while (resultset.next()) {
                 list.add(resultset.getString("name"));
             }
-            System.out.println("returned Deck");
             pre.close();
             return list;
-        } catch (SQLException e) {
-            System.out.println("Error: getDecks()");
-        }
+        } catch (SQLException e) { }
         return null;
     }
+    /**
+     * returns all the users
+     * @return an ArrayList of strings of the usernames
+     */
     public ArrayList<String> getUsers() {
         try {
             PreparedStatement pre = this.database.prepareStatement("SELECT name FROM Users");
@@ -161,7 +187,12 @@ public class Database {
         }
         return null;
     }
-    
+    /**
+     * returns the id associated with a certain deck
+     * @param deck the deck which the id will be returned
+     * @return an integer of the id associated with the deck
+     * @throws SQLException 
+     */
     private int getDeckID(String deck) throws SQLException {
         PreparedStatement ps = this.database.prepareStatement("SELECT id FROM Decks WHERE name=?");
         ps.setString(1, deck);
@@ -184,8 +215,6 @@ public class Database {
         try {
             deckID = getDeckID(deck);
         } catch (SQLException e) {
-            System.out.println("Deck does not exist");
-            System.out.println(e.toString());
             return new ArrayList<>();
         }
         ArrayList<Card> list = new ArrayList<>();
@@ -199,10 +228,7 @@ public class Database {
                 list.add(new Card(resultset.getString("front"), resultset.getString("sentence"), resultset.getString("back"), resultset.getString("backSentence"), false, resultset.getInt("interval")));
             }
             ps.close();
-        } catch (SQLException e) {
-            System.out.println("Could not get cards");
-            System.out.println(e.toString());
-        }
+        } catch (SQLException e) { }
         return list;
     }
     public ArrayList<Card> getNewCards(String deck) {
@@ -245,8 +271,6 @@ public class Database {
         try {
             deckID = getDeckID(deck);
         } catch (SQLException e) {
-            System.out.println("Deck does not exist");
-            System.out.println(e.toString());
             return new ArrayList<>();
         }
         ArrayList<Card> list = new ArrayList<>();
@@ -266,10 +290,7 @@ public class Database {
                 ps.execute();
             }
             ps.close();
-        } catch (SQLException e) {
-            System.out.println("Could not get cards: learning");
-            System.out.println(e.toString());
-        }
+        } catch (SQLException e) { }
         return list;
         
     }
@@ -280,7 +301,6 @@ public class Database {
         try {
             deckID = getDeckID(deck);
         } catch (SQLException e) {
-            System.out.println("could not get deck: updateCard");
             return;
         }
         try {
@@ -295,14 +315,10 @@ public class Database {
             ps.setString(5, card.getSentence());
             ps.setString(6, card.getBack());
             ps.setString(7, card.getBackSentence());
-            
-            
             ps.close();
-        } catch (SQLException e) {
-            System.out.println("Error: could not update card");
-        }
-        
+        } catch (SQLException e) { }
     }
+    
     public boolean isDeckEmpty(String deck) {
         int deckID;
         try {
@@ -322,7 +338,6 @@ public class Database {
             ps = this.database.prepareStatement("SELECT COUNT (*)a FROM Learning WHERE deckID=?");
             ps.setInt(1, deckID);
             ResultSet resultset3 = ps.executeQuery();
-            
             if (resultset.getInt("a") > 0 || resultset2.getInt("a") > 0 || resultset3.getInt("a") > 0) {
                 ps.close();
                 resultset.close();
@@ -334,13 +349,8 @@ public class Database {
             resultset.close();
             resultset2.close();
             resultset3.close();
-        } catch (SQLException e) {
-            System.out.println("isDeckEmpty() error");
-            System.out.println(e.toString());
-        }
-        
+        } catch (SQLException e) { }
         return true;
-        
     }
     
     public boolean doesCardExist(Card card, String deck) {

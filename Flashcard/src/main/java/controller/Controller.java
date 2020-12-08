@@ -10,7 +10,7 @@ import srs.SRS;
  *
  * @author alex
  */
-public class Controller extends Database{
+public class Controller extends Database {
     
     private SRS srs;
     private String user;
@@ -21,10 +21,10 @@ public class Controller extends Database{
     private int easy;
     private int good;
     
-    public Controller() throws Exception{
+    public Controller() throws Exception {
         super();
     }
-    public void initSRS(){
+    public void initSRS() {
         this.srs = new SRS(this.getCards(deck), this.getNewCards(deck), this.getLearningCards(deck));
         
     }
@@ -83,26 +83,22 @@ public class Controller extends Database{
     }
     public void close() {
         ArrayList<Card> list;
-            try {
-                list = this.srs.getLearningCards();
-                for (Card tempCard : list) {
-                    this.addLearningCard(tempCard, deck);
-                }
-                System.out.println("no error");
-            } catch (Exception e) {
-                System.out.println(e.toString());
+        try {
+            list = this.srs.getLearningCards();
+            for (Card tempCard : list) {
+                this.addLearningCard(tempCard, deck);
             }
-            try {
-                list = this.srs.getLearningCards();
-                for (Card card : list) {
-                    this.addNewCard(card.getFront(), card.getSentence(), card.getBack(), card.getBackSentence(), deck);
-                }
-            } catch (Exception e) {
-                System.out.println(e.toString());
+            
+        } catch (Exception e) { }
+        try {
+            list = this.srs.getLearningCards();
+            for (Card card : list) {
+                this.addNewCard(card.getFront(), card.getSentence(), card.getBack(), card.getBackSentence(), deck);
             }
-            if (this.card != null) {
-                this.addLearningCard(this.card, deck);
-            }
+        } catch (Exception e) { }
+        if (this.card != null) {
+            this.addLearningCard(this.card, deck);
+        }
     }
     
     

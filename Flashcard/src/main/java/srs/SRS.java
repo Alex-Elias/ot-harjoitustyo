@@ -7,7 +7,12 @@ import java.util.Comparator;
 import java.util.PriorityQueue;
 
 /**
- *
+ * A class which implements the Spaced Repetition 
+ * This class offers the following methods:
+ *  getNextCard()
+ *  getLearningCards()
+ *  addCard()
+ *  getNewCards()
  * @author alex
  */
 public class SRS {
@@ -16,9 +21,14 @@ public class SRS {
     private ArrayList<Card> newCardList;
     private ArrayList<Card> learningList;
     
-    private double increaseAmount = 2.5;
+   
     private double size;
-    
+    /**
+     * Initialized SRS class with three ArrayLists containing different lists of cards
+     * @param cardList the list of cards that are due and have already been studied
+     * @param newCardList the list of cards that are new
+     * @param learningList the list of cards that are still being learned
+     */
     public SRS(ArrayList<Card> cardList, ArrayList<Card> newCardList, ArrayList<Card> learningList) {
         this.queue = new PriorityQueue<>(new CustomCardComparator());
         this.cardList = cardList;
@@ -39,7 +49,10 @@ public class SRS {
         }
         
     }
-    
+    /**
+     * Returns the next card to be studied
+     * @return a card or null
+     */
     public Card getNextCard() {
         if (this.queue.isEmpty()) {
             if (!this.cardList.isEmpty()) {
@@ -80,6 +93,10 @@ public class SRS {
         return this.queue.poll();
         
     }
+    /**
+     * Returns all the cards currently being studied
+     * @return an ArrayList of cards
+     */
     public ArrayList<Card> getLearningCards() {
         ArrayList<Card> list = new ArrayList<>();
         while (!queue.isEmpty()) {
@@ -87,6 +104,11 @@ public class SRS {
         }
         return list;
     }
+    /**
+     * Adds a card to the queue of learning cards
+     * @param card the card to be added to the queue
+     * @param interval the interval of which the card will be reviewed
+     */
     public void addCard(Card card, int interval) {
         LocalTime lt = LocalTime.now();
         lt = lt.plusMinutes(interval);
@@ -100,6 +122,10 @@ public class SRS {
     }
     
 }
+/**
+ * A Comparator class which compares different cards by their priority
+ * @author alex
+ */
 class CustomCardComparator implements Comparator<Card> {
     
     @Override

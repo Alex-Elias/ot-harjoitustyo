@@ -2,7 +2,6 @@ package gui;
 
 import controller.Controller;
 import datastructures.Card;
-import database.Database;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
@@ -19,7 +18,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import srs.SRS;
 
 /**
  *
@@ -421,7 +419,9 @@ public class GUI extends Application{
         
         }));
         cardSceneReturnToDeckButton.setOnAction((event -> {
+            
             this.updateDeckList();
+            this.controll.close();
             this.controll.setCardNull();
             
             stage.getScene().setRoot(deckSelectionScene);
@@ -430,6 +430,7 @@ public class GUI extends Application{
         }));
         cardSceneGoToAddButton.setOnAction((event -> {
             this.updateDeckList();
+            this.controll.close();
             this.controll.setCardNull();
             
             stage.getScene().setRoot(addCardScene);
@@ -467,18 +468,6 @@ public class GUI extends Application{
         
         
         }));
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
         
         
         
