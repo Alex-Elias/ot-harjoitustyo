@@ -17,4 +17,7 @@
 |30.11.2020|3|Created more tests|
 |08.12.2020|2|Created Controller class|
 |08.12.2020|1|Started on JavaDocs and added more tests|
-|combined|34| 
+|17.12.2020|2.5|Split Database class into three new classes|
+|17.12.2020|0.5|Add delete user and deck functionality|
+|19.12.2020|3|Created more tests|
+|combined|40| 

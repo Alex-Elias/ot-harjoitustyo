@@ -49,6 +49,8 @@ public class GUI extends Application{
     private Button cardSceneEasyButton;
     private Button cardSceneAgainButton;
     
+    private Button cardSceneShowButton;
+    
     
     
 
@@ -56,7 +58,7 @@ public class GUI extends Application{
     public void start(Stage stage) throws Exception {
         
         this.controll = new Controller();
-        this.controll.createTables();
+        this.controll.setUP();
         addSceneDeckSelection = new ComboBox();
         //this.deckList = controll.getDecks();
         
@@ -70,9 +72,10 @@ public class GUI extends Application{
         
         deckSelectionBox.getSelectionModel().selectFirst();
         studyDeckButton = new Button("Study Deck");
-        
+        Button deckDeleteDeckButton = new Button("Delete Deck");
         
         HBox deckSelectionTopButtonHBox = new HBox();
+        HBox deckHBox = new HBox(20);
         VBox deckSelectionVBox = new VBox();
         VBox deckSelectionDeckVBox = new VBox(20);
         
@@ -84,9 +87,10 @@ public class GUI extends Application{
         DecksLabel.setFont(new Font(30));
         
         deckSelectionVBox.setSpacing(50);
+        deckHBox.getChildren().addAll(deckSelectionBox, deckDeleteDeckButton);
         
         deckSelectionTopButtonHBox.getChildren().addAll(AddButton, AddDeckButton, backToUserButton);
-        deckSelectionDeckVBox.getChildren().addAll(DecksLabel, deckSelectionBox, studyDeckButton);
+        deckSelectionDeckVBox.getChildren().addAll(DecksLabel, deckHBox, studyDeckButton);
         deckSelectionVBox.getChildren().addAll(deckSelectionTopButtonHBox, deckSelectionDeckVBox);
         deckSelectionScene.add(deckSelectionVBox,1,1);
         
@@ -96,6 +100,15 @@ public class GUI extends Application{
         
             this.setSelectionDisabled();
         }));
+        deckDeleteDeckButton.setOnAction((event) ->{
+        
+            String deck = (String) this.deckSelectionBox.getValue();
+            this.controll.deleteDeck(deck);
+            this.updateDeckList();
+            this.setSelectionDisabled();
+            
+        
+        });
         
         // Select User Scene -----------------------------------------------------------------------------------
         
@@ -108,6 +121,7 @@ public class GUI extends Application{
         
         Button userCreateUserButton = new Button("Create New User");
         Button userSelectUserButton = new Button("Select User");
+        Button userDeleteUserButton = new Button("Delete User");
         
         Label userUserLabel = new Label("Users");
         
@@ -117,15 +131,30 @@ public class GUI extends Application{
         userComboBox.getSelectionModel().selectFirst();
         userVBox.getChildren().addAll(userCreateUserButton, userUserLabel, userComboBox, userSelectUserButton);
         
-        userScene.add(new Label("test label"), 0, 0);
+        userScene.add(new Label(""), 0, 0);
         userScene.add(userCreateUserButton,2,0);
         userScene.add(userUserLabel,2,2);
         userScene.add(userComboBox, 2,3);
+        userScene.add(userDeleteUserButton, 3,3);
         userScene.add(userSelectUserButton, 2, 4);
         
         if (userList.isEmpty()){
             userSelectUserButton.setDisable(true);
         }
+        
+        userDeleteUserButton.setOnAction((event) -> {
+        
+            String user = (String) userComboBox.getValue();
+            this.controll.deleteUser(user);
+            ArrayList<String> adduserList = this.controll.getUsers();
+            userComboBox.setItems(FXCollections.observableArrayList(adduserList));
+            userComboBox.getSelectionModel().selectFirst();
+            if (this.controll.getUsers().isEmpty()) {
+                userSelectUserButton.setDisable(true);
+            }
+            
+        
+        });
         
         
         
@@ -233,7 +262,8 @@ public class GUI extends Application{
             String back = addSceneBackText.getText();
             String backSentence = addSceneBackSentenceText.getText();
             String deck = (String) addSceneDeckSelection.getValue();
-            this.controll.addNewCard(front, sentence, back, backSentence, deck);
+            this.controll.setDeck(deck);
+            this.controll.addNewCard(front, sentence, back, backSentence);
             addScenefrontText.clear();
             addSceneSentenceText.clear();
             addSceneBackText.clear();
@@ -300,7 +330,7 @@ public class GUI extends Application{
                 cardSceneBackSentenceLabel, cardSceneBackSentenceText);
         HBox cardSceneBottomHBox = new HBox(20);
         
-        Button cardSceneShowButton = new Button("Show");
+        this.cardSceneShowButton = new Button("Show");
         
         
         cardSceneHardButton = new Button();
@@ -343,7 +373,7 @@ public class GUI extends Application{
             stage.getScene().setRoot(CardScene);
             this.controll.setDeck((String) deckSelectionBox.getValue());
             this.controll.initSRS();
-            
+            this.cardSceneShowButton.setVisible(true);
             this.nextCard();
         }));
         
@@ -493,7 +523,7 @@ public class GUI extends Application{
     }
     private void updateDeckList(){
         
-        deckList = controll.getDecks(this.controll.getUser());
+        deckList = controll.getDecks();
         deckSelectionBox.setItems(FXCollections.observableArrayList(deckList));
         deckSelectionBox.getSelectionModel().selectFirst();
         addSceneDeckSelection.setItems(FXCollections.observableArrayList(deckList));
@@ -504,11 +534,13 @@ public class GUI extends Application{
         if (deck == null){
             this.studyDeckButton.setDisable(true);
             this.AddButton.setDisable(true);
+            
             return;
         }
         if (this.controll.isDeckEmpty(deck)){
             this.studyDeckButton.setDisable(true);
             this.AddButton.setDisable(false);
+            
         }else{
             this.studyDeckButton.setDisable(false);
             this.AddButton.setDisable(false);
@@ -523,6 +555,7 @@ public class GUI extends Application{
             this.cardSceneBackText.setVisible(false);
             this.cardSceneBackSentenceText.setVisible(false);
             this.setButtonsVisible(false);
+            this.cardSceneShowButton.setVisible(false);
             return;
         }
             

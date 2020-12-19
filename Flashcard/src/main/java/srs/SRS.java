@@ -54,22 +54,12 @@ public class SRS {
      * @return a card or null
      */
     public Card getNextCard() {
-        if (this.queue.isEmpty()) {
-            if (!this.cardList.isEmpty()) {
-                Card card = cardList.get(0);
-                cardList.remove(0);
-                return card;
-            }
-            if (!newCardList.isEmpty()) {
-                Card card = newCardList.get(0);
-                newCardList.remove(0);
-                return card;
-            }
-            return null;
+        if (this.queue.isEmpty()) { // when all the cards seen have been studied
+            return this.getCardFromList();
         }
         LocalTime time = LocalTime.now();
-        int value = time.compareTo(this.queue.peek().getPriority());
-        if (value > 0) {
+        int value = time.compareTo(this.queue.peek().getPriority()); 
+        if (value > 0) { // when the polled card priority is before the current time
             return this.queue.poll();
         }
         if (this.size == -1 && !this.cardList.isEmpty()) {
@@ -77,21 +67,38 @@ public class SRS {
             cardList.remove(0);
             return card;
         }
-        if (!this.newCardList.isEmpty()) {
-            double ratio = this.cardList.size() / this.newCardList.size();
-            
-            if (ratio > this.size) {
-                Card card = cardList.get(0);
-                cardList.remove(0);
-                return card;
-            } else {
-                Card card = newCardList.get(0);
-                newCardList.remove(0);
-                return card;  
-            }
+        if (!this.newCardList.isEmpty()) { 
+            return this.getCardFromNewCardList();
         }
         return this.queue.poll();
-        
+    }
+    
+    private Card getCardFromNewCardList() {
+        double ratio = this.cardList.size() / this.newCardList.size();
+            
+        if (ratio > this.size) {
+            Card card = cardList.get(0);
+            cardList.remove(0);
+            return card;
+        } else {
+            Card card = newCardList.get(0);
+            newCardList.remove(0);
+            return card;  
+        }
+    }
+    
+    private Card getCardFromList() {
+        if (!this.cardList.isEmpty()) { //when the card already learnt cards list is not empty
+            Card card = cardList.get(0);
+            cardList.remove(0);
+            return card;
+        }
+        if (!newCardList.isEmpty()) { //when the new card list is not empty
+            Card card = newCardList.get(0);
+            newCardList.remove(0);
+            return card;
+        }
+        return null; // when all the cards have been studied
     }
     /**
      * Returns all the cards currently being studied
