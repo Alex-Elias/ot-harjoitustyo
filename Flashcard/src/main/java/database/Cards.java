@@ -13,7 +13,17 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- *
+ * The class offers all the methods related to the Cards table
+ * The included methods are:
+ *  addNewCard
+ *  addCardToDatabase
+ *  getCards
+ *  getNewCards
+ *  getLearningCards
+ *  updateCard
+ *  doesCardExist
+ *  addLearningCard
+ *  addCard
  * @author alex
  */
 public class Cards {
@@ -33,7 +43,7 @@ public class Cards {
      * @param sentence the sentence 
      * @param back the translation of the front word
      * @param backSentence the translation of the sentence
-     * @param deck the deck which contains the word
+     * @param deckID the ID pointing to the deck
      */
     public void addNewCard(String front, String sentence, String back, String backSentence, int deckID) {
         
@@ -54,7 +64,7 @@ public class Cards {
     /**
      * Adds a card to the Cards table
      * @param card the card to be added
-     * @param deck the deck which contains the card
+     * @param deckID the Id of the deck which contains the card
      * @param interval the number of days when the card will be reviewed
      */
     public void addCardToDatabase(Card card, int deckID, int interval) {
@@ -76,6 +86,11 @@ public class Cards {
             System.out.println("error: addCardToDatabase()");
         }      
     }
+    /**
+     * returns all the cards in the Cards table in a certain deck
+     * @param deckID the ID of the deck
+     * @return an ArrayList of the cards in a certain deck
+     */
     public ArrayList<Card> getCards(int deckID) {
         
         ArrayList<Card> list = new ArrayList<>();
@@ -94,6 +109,11 @@ public class Cards {
         }
         return list;
     }
+    /**
+     * returns all the new cards from the NewCards table from a certain deck
+     * @param deckID the ID of the deck which the cards will be returned
+     * @return a ArrayList of cards
+     */
     public ArrayList<Card> getNewCards(int deckID) {
         
         ArrayList<Card> list = new ArrayList<>();
@@ -122,6 +142,11 @@ public class Cards {
         return list;
         
     }
+    /**
+     * returns all the learning cards from the Learning table from a certain deck
+     * @param deckID the ID of the deck 
+     * @return an ArrayList of cards
+     */
     public ArrayList<Card> getLearningCards(int deckID) {
         
         ArrayList<Card> list = new ArrayList<>();
@@ -147,6 +172,12 @@ public class Cards {
         return list;
         
     }
+    /**
+     * updates a the interval of a card in the Cards table
+     * @param card the card to be updated
+     * @param deckID the ID of the deck
+     * @param interval the new interval of the card in the Cards table
+     */
     public void updateCard(Card card, int deckID, int interval) {
         
         try {
@@ -167,6 +198,12 @@ public class Cards {
             System.out.println("error: updateCard()");
         }
     }
+    /**
+     * determines if a card exists in the Cards table in a certain deck
+     * @param card the card that is checked
+     * @param deckID the ID of the deck
+     * @return a boolean value whether the card exists in a certain deck or not
+     */
     public boolean doesCardExist(Card card, int deckID) {
         
         try {
@@ -191,6 +228,11 @@ public class Cards {
         
         return false;
     }
+    /**
+     * adds a card to the learning table
+     * @param card the card to be added
+     * @param deckID the ID of the deck which the card is added
+     */
     public void addLearningCard(Card card, int deckID) {
         
         try {
@@ -207,6 +249,12 @@ public class Cards {
             System.out.println(e.toString());
         }
     }
+    /**
+     * adds a card to the Card table or updates the card if it already exist
+     * @param card the card to be added
+     * @param deckID the ID of the deck
+     * @param interval the interval of the card
+     */
     public void addCard(Card card, int deckID, int interval) {
         if (this.doesCardExist(card, deckID)) {
             this.updateCard(card, deckID, interval);

@@ -5,7 +5,7 @@ import gui.GUI;
 
 
 /**
- *
+ * 
  * @author alex
  */
 public class Main {

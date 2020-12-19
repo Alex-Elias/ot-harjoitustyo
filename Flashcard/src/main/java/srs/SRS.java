@@ -72,7 +72,10 @@ public class SRS {
         }
         return this.queue.poll();
     }
-    
+    /**
+     * returns either a card from the NewCardList or cardList depending on the ratio of new cards to cards
+     * @return a Card
+     */
     private Card getCardFromNewCardList() {
         double ratio = this.cardList.size() / this.newCardList.size();
             
@@ -86,7 +89,10 @@ public class SRS {
             return card;  
         }
     }
-    
+    /**
+     * returns either a card from the cardList or newCardList if cardList is empty
+     * @return 
+     */
     private Card getCardFromList() {
         if (!this.cardList.isEmpty()) { //when the card already learnt cards list is not empty
             Card card = cardList.get(0);
@@ -124,6 +130,10 @@ public class SRS {
         
         
     }
+    /**
+     * returns all the new cards that have not been studied
+     * @return an ArrayList of cards
+     */
     public ArrayList<Card> getNewCards() {
         return this.newCardList;
     }

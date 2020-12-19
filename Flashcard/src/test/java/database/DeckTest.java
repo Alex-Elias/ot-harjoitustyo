@@ -88,5 +88,11 @@ public class DeckTest {
         this.deck.deleteDeck("test", 1);
         assertEquals(0, this.deck.getDecks(1).size());
     }
+    @Test
+    public void returnDeckExceptionTest() {
+        this.deck.addDeck(1, "test");
+        assertEquals(0,this.deck.getDecks(2).size());
+    }
+    
     
 }

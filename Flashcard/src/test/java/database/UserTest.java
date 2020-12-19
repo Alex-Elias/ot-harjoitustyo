@@ -71,5 +71,10 @@ public class UserTest {
         this.user.deleteUser("user");
         assertEquals(0, this.user.getUsers().size());
     }
-    
+    @Test
+    public void deleteUserExceptionTest() {
+        this.user.addUser("user");
+        this.user.deleteUser("use");
+        assertTrue(this.user.getUsers().size() > 0);
+    }
 }

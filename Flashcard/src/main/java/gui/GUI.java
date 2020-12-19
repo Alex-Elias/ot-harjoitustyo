@@ -20,12 +20,12 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 /**
- *
+ * The graphical user interface class
  * @author alex
  */
 public class GUI extends Application{
     
-    Controller controll;
+    private Controller controll;
     
     
     
@@ -60,7 +60,7 @@ public class GUI extends Application{
         this.controll = new Controller();
         this.controll.setUP();
         addSceneDeckSelection = new ComboBox();
-        //this.deckList = controll.getDecks();
+        
         
         // Main deck selection scene -----------------------------------------------
         GridPane deckSelectionScene = new GridPane();
@@ -517,7 +517,9 @@ public class GUI extends Application{
         
     }
     
-    
+    /**
+     * the method launches the GUI
+     */
     public void runGUI(){
         launch(GUI.class);
     }
@@ -621,7 +623,7 @@ public class GUI extends Application{
         this.cardSceneBackSentenceText.setVisible(false);
         this.setButtonsVisible(false);
     }
-    public void setButtonsVisible(boolean b) {
+    private void setButtonsVisible(boolean b) {
         cardSceneHardButton.setVisible(b);
         cardSceneGoodButton.setVisible(b);
         cardSceneEasyButton.setVisible(b);

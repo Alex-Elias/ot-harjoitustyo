@@ -6,7 +6,10 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 /**
- *
+ * The class creates the required tables to run the application
+ * The class offers the following methods:
+ *  createTables()
+ *  dropTables()
  * @author alex
  */
 public class Database {
@@ -49,7 +52,15 @@ public class Database {
     
     
     
-    
+    /**
+     * The method drops all the tables created by createTable() method
+     * the method drops the following tables:
+     *  Cards
+     *  Decks
+     *  Users
+     *  NewCards
+     *  Learning
+     */
     public void dropTables() {
         try {
             PreparedStatement ps = this.database.prepareStatement("DROP TABLE IF EXISTS Cards");
