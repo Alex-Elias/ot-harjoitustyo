@@ -100,6 +100,13 @@ public class CardsTest {
         assertEquals("t", list.get(0).getBackSentence());
     }
     @Test
+    public void getNewCardsRemoveCardFromTable() {
+        this.card.addNewCard("t", "e", "s", "t", 1);
+        ArrayList<Card> list = this.card.getNewCards(1);
+        assertEquals(1, list.size());
+        assertEquals(0, this.card.getNewCards(1).size());
+    }
+    @Test
     public void getCorrectLearningCards() {
         this.card.addLearningCard(new Card("t", "e", "s", "t", true, 10), 1);
         
@@ -109,6 +116,13 @@ public class CardsTest {
         assertEquals("s", list.get(0).getBack());
         assertEquals("t", list.get(0).getBackSentence());
         assertEquals(10, list.get(0).getInterval());
+    }
+    @Test
+    public void getLearningCardsRemoveCardFromTable() {
+        this.card.addLearningCard(new Card("t", "e", "s", "t", true, 10), 1);
+        ArrayList<Card> list = this.card.getLearningCards(1);
+        assertEquals(1, list.size());
+        assertEquals(0, this.card.getLearningCards(1).size());
     }
     @Test
     public void doesCardExistTestTrue() {

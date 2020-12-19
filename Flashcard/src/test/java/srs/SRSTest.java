@@ -26,6 +26,8 @@ public class SRSTest {
         this.list = new ArrayList<>();
         newList.add(new Card("test","t","e","s", true));
         learning.add(new Card("tes","t","e","s", false));
+        list.add(new Card("tt","ee","ss","tt",true));
+        
         this.srs = new SRS(list, newList, learning);
     }
     
@@ -46,7 +48,35 @@ public class SRSTest {
     public void returnsNullWhenEmptyTest(){
         this.srs.getNextCard();
         this.srs.getNextCard();
+        this.srs.getNextCard();
         assertEquals(null, this.srs.getNextCard());
+    }
+    @Test
+    public void returnsCorrectLearningCards() {
+        ArrayList<Card> list = this.srs.getLearningCards();
+        assertEquals("tes", list.get(0).getFront());
+        assertEquals("t", list.get(0).getSentence());
+        assertEquals("e", list.get(0).getBack());
+        assertEquals("s", list.get(0).getBackSentence());
+    }
+    @Test
+    public void getNextCardReturnsCorrectSecondCard() {
+        this.srs.getNextCard();
+        Card card = this.srs.getNextCard();
+        assertEquals("tt", card.getFront());
+        assertEquals("ee", card.getSentence());
+        assertEquals("ss", card.getBack());
+        assertEquals("tt", card.getBackSentence());
+    }
+    @Test
+    public void getNextCardReturnsCorrectThirdCard() {
+        this.srs.getNextCard();
+        this.srs.getNextCard();
+        Card card = this.srs.getNextCard();
+        assertEquals("test", card.getFront());
+        assertEquals("t", card.getSentence());
+        assertEquals("e", card.getBack());
+        assertEquals("s", card.getBackSentence());
     }
     
     

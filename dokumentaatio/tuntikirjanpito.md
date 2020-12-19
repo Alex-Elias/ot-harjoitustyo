@@ -20,4 +20,6 @@
 |17.12.2020|2.5|Split Database class into three new classes|
 |17.12.2020|0.5|Add delete user and deck functionality|
 |19.12.2020|3|Created more tests|
-|combined|40| 
+|19.12.2020|2|Created more JavaDocs|
+|19.12.2020|3|Added more tests|
+|combined|45| 

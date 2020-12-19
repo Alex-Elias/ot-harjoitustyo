@@ -5,7 +5,6 @@ import database.Database;
 import database.Deck;
 import database.User;
 import datastructures.Card;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import srs.SRS;
 
@@ -124,7 +123,7 @@ public class Controller {
         this.user.addUser(user);
     }
     /**
-     * 
+     * changes the interval depending on the current interval
      */
     public void hard() {
         if (this.currentCard.isNew() && hard != 1) {
@@ -134,6 +133,9 @@ public class Controller {
             this.card.addCard(currentCard, this.deckID, hard);
         }
     }
+    /**
+     * Changes the intervals depending on the previous interval
+     */
     public void good() {
         if (this.currentCard.isNew() && good != 1) {
             this.currentCard.setInterval(good);
@@ -142,9 +144,15 @@ public class Controller {
             this.card.addCard(currentCard, this.deckID, good);
         }
     }
+    /**
+     * adds the card to the Cards table
+     */
     public void easy() {
         this.card.addCard(currentCard, this.deckID, easy);
     }
+    /**
+     * sets the current card interval to 1 and puts the card back into the queue
+     */
     public void again() {
         this.currentCard.setInterval(1);
         this.srs.addCard(currentCard, 1);
@@ -229,7 +237,7 @@ public class Controller {
             
         } catch (Exception e) { }
         try {
-            list = this.srs.getLearningCards();
+            list = this.srs.getNewCards();
             for (Card card : list) {
                 this.card.addNewCard(card.getFront(), card.getSentence(), card.getBack(), card.getBackSentence(), this.deckID);
             }
