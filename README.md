@@ -26,6 +26,10 @@ This application was created for the Ohjelmistotekniikka class at the University
 
 [Week 6 release](https://github.com/Alex-Elias/ot-harjoitustyo/releases/tag/viikko6)
 
+### Final deadline
+
+[Final deadline](https://github.com/Alex-Elias/ot-harjoitustyo/releases/tag/v1.0)
+
 ## Commands
 
 ### Testing
