@@ -40,4 +40,8 @@ The database consists of five tables.
 
 ### Card creation
 
-![card creation]()
+![card creation](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/addCard.png)
+
+### Card review
+
+![card review](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/studyDeck.png)
