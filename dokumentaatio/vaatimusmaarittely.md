@@ -8,6 +8,12 @@ The application is a basic spaced repetition flashcard software. The user create
 
 The application supports having multiple different users with their own set of decks.
 
+## User interface layout
+
+The user interface consists of six different scenes.
+
+![interface](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/layout.JPG)
+
 ## Base version functionality
 
 ### Before signing in
