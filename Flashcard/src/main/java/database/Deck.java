@@ -44,7 +44,6 @@ public class Deck {
             ps.close();
             return deckID;
         } catch (SQLException e) {
-            System.out.println("error: getDeckID()");
             return 0;
         }
             
@@ -67,7 +66,6 @@ public class Deck {
             pre.close();
             return list;
         } catch (SQLException e) { 
-            System.out.println("Error: getDecks()");
         }
         return null;
     }
@@ -86,10 +84,8 @@ public class Deck {
             
             
             pre.execute();
-            System.out.println("Added deck");
             pre.close();
         } catch (SQLException e) {
-            System.out.println("Error!");
         }
     }
     /**
@@ -121,7 +117,6 @@ public class Deck {
             resultset2.close();
             resultset3.close();
         } catch (SQLException e) { 
-            System.out.println("error : isDeckEmpty()");
         }
         return true;
     }
@@ -139,7 +134,6 @@ public class Deck {
             pre.close();
                     
         } catch (SQLException e) {
-            System.out.println("error: deleteDeck()");
         }
     }
 }

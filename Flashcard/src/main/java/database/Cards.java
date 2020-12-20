@@ -57,7 +57,6 @@ public class Cards {
             pre.executeUpdate();
             pre.close();
         } catch (SQLException e) { 
-            System.out.println("error");
         }
         
     }
@@ -83,7 +82,6 @@ public class Cards {
             pre.executeUpdate();
             pre.close();
         } catch (SQLException e) {
-            System.out.println("error: addCardToDatabase()");
         }      
     }
     /**
@@ -105,7 +103,6 @@ public class Cards {
             }
             ps.close();
         } catch (SQLException e) { 
-            System.out.println("error: getCards()");
         }
         return list;
     }
@@ -136,8 +133,6 @@ public class Cards {
             
             ps.close();
         } catch (SQLException e) {
-            System.out.println("Could not get cards: new cards");
-            System.out.println(e.toString());
         }
         return list;
         
@@ -167,7 +162,6 @@ public class Cards {
             }
             ps.close();
         } catch (SQLException e) {
-            System.out.println("error: getLearningCards()");
         }
         return list;
         
@@ -195,7 +189,6 @@ public class Cards {
             ps.execute();
             ps.close();
         } catch (SQLException e) { 
-            System.out.println("error: updateCard()");
         }
     }
     /**
@@ -223,7 +216,6 @@ public class Cards {
             rs.close();
             
         } catch (SQLException e) {
-            System.out.println("Error: doesCardExist()");
         }
         
         return false;
@@ -245,8 +237,6 @@ public class Cards {
             ps.setInt(6, card.getInterval());
             ps.execute();
         } catch (SQLException e) {
-            System.out.println("Error: addLearningCard()");
-            System.out.println(e.toString());
         }
     }
     /**

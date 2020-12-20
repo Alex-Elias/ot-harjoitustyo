@@ -42,10 +42,7 @@ public class Database {
                 + " backSentence TEXT, deckID INTEGER REFERENCES Decks)");
             this.statement.execute("CREATE TABLE Learning (id INTEGER PRIMARY KEY, front TEXT UNIQUE, sentence TEXT, back TEXT,"
                 + " backSentence TEXT, deckID INTEGER REFERENCES Decks, interval INTEGER)");
-            System.out.println("Tables created");
         } catch (SQLException e) {
-            System.out.println("Tables already exist");
-            System.out.println(e.toString());
         }
     }
     
@@ -75,8 +72,6 @@ public class Database {
             ps.execute();
             ps.close();
         } catch (SQLException e) {
-            System.out.println("Error: error at dropTables method");
-            System.out.println(e.toString());
         }
     }
     

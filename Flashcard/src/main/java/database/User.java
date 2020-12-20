@@ -41,7 +41,6 @@ public class User {
             ps.close();
             return userID;
         } catch (SQLException e) {
-            System.out.println("error: getUserID()");
             return 0;
             
         }
@@ -60,11 +59,9 @@ public class User {
             while (resultset.next()) {
                 list.add(resultset.getString("name"));
             }
-            System.out.println("returned Users");
             pre.close();
             return list;
         } catch (SQLException e) {
-            System.out.println("Error: get users");
         }
         return null;
     }
@@ -78,10 +75,8 @@ public class User {
             pre.setString(1, user);
             
             pre.execute();
-            System.out.println("Added User");
             pre.close();
         } catch (SQLException e) {
-            System.out.println("Error: add user");
         }
     }
     /**
@@ -95,7 +90,6 @@ public class User {
             pre.execute();
             pre.close();
         } catch (SQLException e) {
-            System.out.println("deleted user");
         }
     }
 }
