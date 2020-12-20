@@ -76,3 +76,13 @@ To create a new card the user clicks on the add card button which prompts the GU
 ![card review](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/studyDeck.png)
 
 To review a card the user clicks on the study deck button. The GUI class then calls the setDeck method from the Controller class with the parameter being the name of the deck. The GUI class also calls the initSRS method fron the Controller class which initializes the SRS class. The GUI class also calls the nextCard method from the Controller class which then calls the nextCard method from the SRS class. The SRS class then returns the next card to the Controller class which then returns it the the GUI class. The GUI class changes the scene to the card scene and displays the contents of the card to the user.
+
+## Architectual weaknesses
+
+### Graphical user interface
+
+The GUI is all contained within one class and most of the functionality is within the start method. An improvement to the structure of the graphical user interface would be to seperate all six different scenes into their own class or method. The variable names are lacking a consistant and concise scheme which leads to an overall lack of clarity.
+
+### SRS class
+
+The SRS class is in a weird middle ground where it does not fit entirely into its own package but is also seperate from the other classes. It would need to be reworked so that both the Controller class and the SRS class would fit into a new logic package.
