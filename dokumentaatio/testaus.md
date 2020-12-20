@@ -18,7 +18,7 @@ The SRS tests focus mainly on the getNext method.
 
 With the GUI class excluded the test coverage of the application is at 78 percent.
 
-![test coverage]()
+![test coverage](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/testCoverage.png)
 
 The class that contributes most to the lack of coverage is the controller class where most of the methods are getter/setter methods. The other detriment to the testing coverage comes from the database classes where most of the catch statements are not tested.
 
