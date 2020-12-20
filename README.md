@@ -11,6 +11,8 @@ With the help of this app the user is able to create and study different flashca
 
 [Käyttöohje](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/dokumentaatio/kayttoohje.md)
 
+[Testausdocumentti](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/dokumentaatio/testaus.md)
+
 
 ## Releases
 
