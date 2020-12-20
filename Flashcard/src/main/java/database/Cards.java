@@ -112,9 +112,7 @@ public class Cards {
      * @return a ArrayList of cards
      */
     public ArrayList<Card> getNewCards(int deckID) {
-        
         ArrayList<Card> list = new ArrayList<>();
-        
         try {
             PreparedStatement ps = this.database.prepareStatement("SELECT front, sentence, back, backSentence FROM NewCards WHERE deckID=? LIMIT 15");
             ps.setInt(1, deckID);
@@ -130,7 +128,6 @@ public class Cards {
                 ps.setString(4, card.getBack());
                 ps.execute();
             }
-            
             ps.close();
         } catch (SQLException e) {
         }
@@ -143,7 +140,6 @@ public class Cards {
      * @return an ArrayList of cards
      */
     public ArrayList<Card> getLearningCards(int deckID) {
-        
         ArrayList<Card> list = new ArrayList<>();
         try {
             PreparedStatement ps = this.database.prepareStatement("SELECT front, sentence, back, backSentence, interval FROM Learning WHERE deckID=?");
@@ -163,8 +159,7 @@ public class Cards {
             ps.close();
         } catch (SQLException e) {
         }
-        return list;
-        
+        return list; 
     }
     /**
      * updates a the interval of a card in the Cards table

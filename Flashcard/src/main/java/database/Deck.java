@@ -94,7 +94,6 @@ public class Deck {
      * @return a boolean value whether the deck is empty or not
      */
     public boolean isDeckEmpty(int deckID) {
-        
         try {
             PreparedStatement ps = this.database.prepareStatement("SELECT COUNT(*)a FROM Cards WHERE deckID=?");
             ps.setInt(1, deckID);
