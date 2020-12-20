@@ -28,3 +28,16 @@ The database consists of five tables.
 ## Main functionalities
 
 ### User login
+![user selection](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/userSelection.png)
+
+### User creation
+
+![user creation](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/createUser.png)
+
+### Deck creation
+
+![deck creation](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/addDeck.png)
+
+### Card creation
+
+![card creation]()
