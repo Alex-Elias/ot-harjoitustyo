@@ -2,6 +2,8 @@
 
 With the help of this app the user is able to create and study different flashcards in a spaced repetition. This app is able to save multiple users with multiple decks for each user.
 
+This application was created for the Ohjelmistotekniikka class at the University of Helsinki during the autumn of 2020.
+
 ## Documentation
 [Vaatimusmäärittely](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/dokumentaatio/vaatimusmaarittely.md)
 
