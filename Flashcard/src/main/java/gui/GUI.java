@@ -274,10 +274,13 @@ public class GUI extends Application{
         
         // Deck add scene -----------------------------------------------------------------------------------
         GridPane deckAddScene = new GridPane();
+        deckAddScene.setPadding(new Insets(20,20,20,20));
         
         Button deckAddReturnToDeckButton = new Button("Decks");
-        VBox deckAddVBox = new VBox();
-        deckAddVBox.getChildren().add(new Label("Deck name"));
+        VBox deckAddVBox = new VBox(10);
+        Label deckNameLabel = new Label("Deck name");
+        deckNameLabel.setFont(new Font("Arial", 20));
+        deckAddVBox.getChildren().add(deckNameLabel);
         TextField deckAddNameField = new TextField();
         Button deckAddAddDeckButton = new Button("Add");
         deckAddVBox.getChildren().addAll(deckAddNameField, deckAddAddDeckButton);
