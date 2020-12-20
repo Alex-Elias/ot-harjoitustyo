@@ -21,5 +21,10 @@ The graphical user interface contains six different scenes
 
 ### Database
 
+The database consists of five tables.
 
+![tables](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/tables.png)
 
+## Main functionalities
+
+### User login
