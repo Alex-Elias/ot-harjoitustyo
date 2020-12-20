@@ -76,4 +76,4 @@ JavaDocs can be generated with the command
 
 `mvn javadoc:javadoc`
 
-
+The generated JavaDocs can be found at *target/site/apidocs/index.html*
