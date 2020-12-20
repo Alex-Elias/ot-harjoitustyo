@@ -22,4 +22,5 @@
 |19.12.2020|3|Created more tests|
 |19.12.2020|2|Created more JavaDocs|
 |19.12.2020|3|Added more tests|
-|combined|45| 
+|19.12.2020|2|Finished the user guide document|
+|combined|47| 

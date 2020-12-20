@@ -6,14 +6,19 @@ The application is a basic spaced repetition flashcard software. The user create
 
 ## Users
 
-The application can have multiple different users with their own set of decks.
+The application supports having multiple different users with their own set of decks.
 
-## Planned functionality
+## Base version functionality
 
 ### Before signing in
 
 - The user can create a new unique account
+
+  - The username must be unique
+
 - The user can sign into an existing account
+
+- The user can delete an existing account
 
 ### After signing in
 
@@ -21,13 +26,12 @@ The application can have multiple different users with their own set of decks.
 - The user can create a new deck or add flashcards to an existing deck
 - The user can review a deck
 - The user can sign out
-- The user can resume where they left if they did not finish fully reviewing a deck
-- The user can back out of the current deck being studied and the progress is saved - done
+- The user can delete an existing deck
+- The user can resume where they left off if they did not fully finish reviewing a deck
 
 ### Possible improvements and expansions
 
-- Addition of pictures to the flashcards
-- Being able to choose the spacing amount for the repetitions
+- Being able to individually choose the spacing amount for the repetitions
 - Functionality to be able to search through a deck for a certain card
 - Functionality to prevent duplicate cards from being added
 - Functionality to view cards in the deck and easily edit them
