@@ -10,7 +10,7 @@ The program can be run with the command
 
 ## Creating a new user
 
-When opening the application you are first met with a scene similar to this. You can create a new user by clicking on the **_Create User_** button.
+When opening the application you are first met with a scene similar to this. You can create a new user by clicking on the **_Create New User_** button.
 
 ![Select user image](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/UserSelectionScene.png)
 
@@ -22,7 +22,7 @@ Type into the empty text field your new username and click on the **_Create User
 
 ## Selecting a user
 
-To select a user click on the drop down menu and select the user you wish to log into then click on the **_Select User_** button.
+To select a user click on the drop down menu and select the user you wish to log into. Click onto the **_Select User_** button to log in.
 
 
 ![Select user image](https://github.com/Alex-Elias/ot-harjoitustyo/blob/master/Images/UserSelectionScene.png)
