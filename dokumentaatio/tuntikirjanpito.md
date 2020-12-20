@@ -24,4 +24,5 @@
 |19.12.2020|3|Added more tests|
 |20.12.2020|2|Finished the user guide document|
 |20.12.2020|4|Worked on the Architecture document|
-|combined|51| 
+|20.12.2020|2|Added testing document and cleaned up project|
+|combined|53| 
